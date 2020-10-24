@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My experiment</title>
+    <!-- <style>
+    	* { padding: 0; margin: 0; }
+    	canvas { background: #eee; display: block; margin: 0 auto; border: 3px solid black; }
+    </style> -->
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-database.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyB0l7n5oh7KZic1pe03tLVMA0rzo2K3VYM",
+        authDomain: "circletask-da493.firebaseapp.com",
+        databaseURL: "https://circletask-da493.firebaseio.com",
+        projectId: "circletask-da493",
+        storageBucket: "circletask-da493.appspot.com",
+        messagingSenderId: "877922101374",
+        appId: "1:877922101374:web:9c777198afa6ac12add02f",
+        measurementId: "G-74S6ZPCME0"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      var database = firebase.database();
+      firebase.analytics();
+    </script>
+    <script src="jspsych-6.1.0/jspsych.js"></script>
+    <script src="./questions.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-survey-html-form.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-instructions.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
+    <script src="jspsych-6.1.0/plugins/circleTask.js"></script>
+    <script src="jspsych-6.1.0/plugins/circleTask2.js"></script>
+    <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+    <link href="/index.css" rel="stylesheet" type="text/css"></link>
+
+  </head>
+  <body>
+  </body>
+  <!-- <script type="module" src="./questions.js"></script> -->
+  <script src="/index.js"></script>
+</html>

@@ -1,0 +1,24 @@
+{
+  "name": "circletask",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Fenil",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fenil-P/RADLab-CircleTask-master.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Fenil-P/RADLab-CircleTask-master/issues"
+  },
+  "homepage": "https://github.com/Fenil-P/RADLab-CircleTask-master.git#readme",
+  "description": ""
+}
