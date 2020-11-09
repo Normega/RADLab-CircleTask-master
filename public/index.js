@@ -9,10 +9,10 @@
 // import questions from "./questions";
 // experiment constants
 
-const NUMBER_OF_TRIALS_1 = 15; // original: 15
-const NUMBER_OF_TRIALS_2 = 10; // original: 10
-const NUMBER_OF_PULSES_1 = 8; // original: 8
-const NUMBER_OF_PULSES_2 = 12; // original: 12
+const NUMBER_OF_TRIALS_1 = 1; // original: 15
+const NUMBER_OF_TRIALS_2 = 1; // original: 10
+const NUMBER_OF_PULSES_1 = 1; // original: 8
+const NUMBER_OF_PULSES_2 = 1; // original: 12
 
 // firebase.auth().signInAnonymously().catch(function(error) {
 //   // Handle Errors here.
@@ -367,7 +367,7 @@ function extractTaskData(targetTask) {
     task1Data.forEach((currTask) => {
         // filtering the needed aspects from task 1
         let { task, trialNumber, speed, responses } = currTask;
-
+        let currFilteredData;
         // only task 1 has attribute 'step'
         if (targetTask === "Circle Task 1") {
             let { task, trialNumber, speed, step, responses } = currTask;
@@ -402,7 +402,7 @@ function extractTaskQuestion(targetTask) {
     task1Data.forEach((currTask) => {
         // filtering the needed aspects from task 1
         let { taskType, trial, correct, key_press } = currTask;
-        currFilteredData = {
+        let currFilteredData = {
             taskType: taskType,
             trial: trial,
             correct: correct,
