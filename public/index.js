@@ -1,12 +1,26 @@
+// import firebase from '../firebase'
+
+// firebase.auth().signInAnonymously().catch(function(error) {
+//     // Handle Errors here.
+//     var errorCode = error.code;
+//     var errorMessage = error.message;
+//     // ...
+//   });
 // import questions from "./questions";
 // experiment constants
-const NUMBER_OF_TRIALS_1 = 1; // original: 15
-const NUMBER_OF_TRIALS_2 = 1; // original: 10
-const NUMBER_OF_PULSES_1 = 1; // original: 8
-const NUMBER_OF_PULSES_2 = 1; // original: 12
 
-// this timeline array stores each plug-in of this web application
-// this includes messages, instructions and experiments which are shown
+const NUMBER_OF_TRIALS_1 = 15; // original: 15
+const NUMBER_OF_TRIALS_2 = 10; // original: 10
+const NUMBER_OF_PULSES_1 = 8; // original: 8
+const NUMBER_OF_PULSES_2 = 12; // original: 12
+
+// firebase.auth().signInAnonymously().catch(function(error) {
+//   // Handle Errors here.
+//   var errorCode = error.code;
+//   var errorMessage = error.message;
+//   // ...
+// });// this timeline array stores each plug-in of this web application
+// // this includes messages, instructions and experiments which are shown
 // in the order specified in this array
 var timeline = [];
 //Testing questionnaire
@@ -16,16 +30,8 @@ var workerId = {
     html: '<div id="workerId"><input name="workerId" id="worker" type="text" /></p>',
   };
 
+(firebase.auth);
 timeline.push(workerId)
-
-
-var questionnaire = {
-    type: 'survey-html-form',
-    preamble: '<h1>Questionnaire:</h1></br><p> <strong>Please indicate how often each statement applies to you generally in daily life.</strong></p>',
-    html: buildQuestionnaire(questions)
-  };
-
-timeline.push(questionnaire)
 
 // helper method for shuffling trials
 function shuffle(array) {
@@ -84,7 +90,7 @@ var instructions1 = {
     show_clickable_nav: true,
     post_trial_gap: 500,
 };
-//timeline.push(instructions1);
+timeline.push(instructions1);
 
 // pre-expriment screen for experiment 1
 var startScreen = {
@@ -94,7 +100,7 @@ var startScreen = {
         "<p>Press any key to begin the experiment.</p>",
     post_trial_gap: 1000,
 };
-//timeline.push(startScreen);
+timeline.push(startScreen);
 
 let step = 0.1;
 let difficulty = 0.5;
@@ -160,7 +166,7 @@ for (let i = 0; i < NUMBER_OF_TRIALS_1; i++) {
         numberOfPulses: NUMBER_OF_PULSES_1,
         speed: speeds1[i],
     };
-    //timeline.push(circleTask);
+    timeline.push(circleTask);
 
     var awareness = {
         type: "html-keyboard-response",
@@ -182,7 +188,7 @@ for (let i = 0; i < NUMBER_OF_TRIALS_1; i++) {
             }
         },
     };
-    //timeline.push(awareness);
+    timeline.push(awareness);
 }
 
 // welcome message for experiment 2
@@ -192,7 +198,7 @@ var welcome2 = {
         "Welcome to the second part of the experiment. Press any key to show instructions.",
     post_trial_gap: 500,
 };
-//timeline.push(welcome2);
+timeline.push(welcome2);
 
 // pages of instructions for experiment 2
 var instructions2 = {
@@ -228,7 +234,7 @@ var instructions2 = {
     show_clickable_nav: true,
     post_trial_gap: 500,
 };
-//timeline.push(instructions2);
+timeline.push(instructions2);
 
 // pre-experiment screen
 var startScreen = {
@@ -238,7 +244,7 @@ var startScreen = {
         "<p>Press any key to begin the experiment.</p>",
     post_trial_gap: 1000,
 };
-// timeline.push(startScreen);
+timeline.push(startScreen);
 
 let speeds2 = [
     "up",
@@ -276,7 +282,7 @@ for (let i = 0; i < NUMBER_OF_TRIALS_2; i++) {
         numberOfPulses: NUMBER_OF_PULSES_2,
         speed: speeds2[i],
     };
-    // timeline.push(circleTask2);
+    timeline.push(circleTask2);
 
     var awareness = {
         type: "html-keyboard-response",
@@ -298,19 +304,28 @@ for (let i = 0; i < NUMBER_OF_TRIALS_2; i++) {
             }
         },
     };
-    // timeline.push(awareness);
+    timeline.push(awareness);
 }
+
+var questionnaire = {
+    type: 'survey-html-form',
+    preamble: '<h1>Questionnaire:</h1></br><p> <strong>Please indicate how often each statement applies to you generally in daily life.</strong></p>',
+    html: buildQuestionnaire(questions)
+  };
+
+timeline.push(questionnaire)
+
 
 var x = getAuthNum()
 // end message
 var postTrial = {
     type: "html-keyboard-response",
     stimulus:
-        `The experiment has concluded. Your authentation number is <b> ${x} </b> Press any key to show experiment data.`,
+        `The experiment has concluded. Your authentation number is <b> ${x} </b>. Press any key to end.`,
     post_trial_gap: 500,
     authentation: x
 };
-// timeline.push(postTrial);
+timeline.push(postTrial);
 
 // start the experiment
 jsPsych.init({
