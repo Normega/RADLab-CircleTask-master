@@ -371,7 +371,11 @@ jsPsych.plugins["rdk"] = (function() {
 
 		//Remove the margins and padding of the canvas
 		canvas.style.margin = 0;
-		canvas.style.padding = 0;		
+		canvas.style.padding = 0;
+		// use absolute positioning in top left corner to get rid of scroll bars
+		canvas.style.position = 'absolute';
+		canvas.style.top = 0;
+		canvas.style.left = 0;		
 		
 		//Get the context of the canvas so that it can be painted on.
 		var ctx = canvas.getContext("2d");
@@ -949,13 +953,12 @@ jsPsych.plugins["rdk"] = (function() {
       
 		    //Draw the fixation cross if we want it
 		    if(fixationCross === true){
-		      
 		    	//Horizontal line
 		    	ctx.beginPath();
 		    	ctx.lineWidth = fixationCrossThickness;
 		    	ctx.moveTo(canvasWidth/2 - fixationCrossWidth, canvasHeight/2);
 		    	ctx.lineTo(canvasWidth/2 + fixationCrossWidth, canvasHeight/2);
-		    	ctx.fillStyle = fixationCrossColor;
+		    	ctx.strokeStyle = fixationCrossColor;
 		    	ctx.stroke();
 		    	
 		    	//Vertical line
@@ -963,7 +966,7 @@ jsPsych.plugins["rdk"] = (function() {
 		    	ctx.lineWidth = fixationCrossThickness;
 		    	ctx.moveTo(canvasWidth/2, canvasHeight/2 - fixationCrossHeight);
 		    	ctx.lineTo(canvasWidth/2, canvasHeight/2 + fixationCrossHeight);
-		    	ctx.fillStyle = fixationCrossColor;
+		    	ctx.strokeStyle = fixationCrossColor;
 		    	ctx.stroke();
 		    }
       

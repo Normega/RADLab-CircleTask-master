@@ -31,4 +31,8 @@ questions = ['When I am tense I notice where the tension is located in my body. 
             ' I feel my body is a safe place. ',
             ' I trust my body sensations. '];
 
+            startQuestions = ['You are a Human if 5: ', 
+            ' You are a Real Participant if 1 ',
+            ' Pick 5-1:',
+            ];
 // export default questions;

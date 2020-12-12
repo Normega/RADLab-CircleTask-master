@@ -64,10 +64,20 @@ jsPsych.plugins["circle-task-two"] = (function () {
                 default: 1,
                 description: "The current trial number of the circle task.",
             },
+            accuracy: {
+                type: jsPsych.plugins.parameterType.FLOAT,
+                pretty_name: "Accuracy",
+                default: 0,
+                description: "Current accuracy based on key presses.",
+            },
         },
     };
 
     plugin.trial = function (display_element, trial) {
+
+        var total = 0;
+        var correct = 0;
+
         const startTime = performance.now();
         var new_html =
             '<div id="jspsych-html-keyboard-response-stimulus">' +
@@ -107,6 +117,7 @@ jsPsych.plugins["circle-task-two"] = (function () {
                 task: "Circle Task 2",
                 trialNumber: trial.trialNumber,
                 speed: trial.speed,
+                accuracy: correct/total,
                 responses: responses,
                 // stimulus: trial.stimulus,
             };
@@ -121,7 +132,14 @@ jsPsych.plugins["circle-task-two"] = (function () {
         // response listener always listening for key presses and recording them
         var record_data = function (info) {
             var keyPressTime = performance.now() - startTime;
-            console.log(`Key ${info.key} pressed at ${keyPressTime}`);
+            total += 1;
+            if (expand && info.key == 74){
+                correct += 1;
+            } else if (!expand && info.key == 70){
+                correct += 1;
+            }
+            console.log(`Key ${info.key} pressed at ${keyPressTime} and correct${correct} total${total}`);
+            
             responses.push({
                 type: "key",
                 variable: info.key,

@@ -70,6 +70,12 @@ jsPsych.plugins["circle-task"] = (function () {
                 default: 1,
                 description: "Current step in the staircase method.",
             },
+            accuracy: {
+                type: jsPsych.plugins.parameterType.FLOAT,
+                pretty_name: "Accuracy",
+                default: 0,
+                description: "Current accuracy based on key presses.",
+            },
         },
     };
 
@@ -92,6 +98,9 @@ jsPsych.plugins["circle-task"] = (function () {
         // for storing responses
         var responses = [];
 
+        var total = 0;
+        var correct = 0;
+
         // function to end trial when it is time
         var end_trial = function () {
             // kill animation
@@ -108,6 +117,7 @@ jsPsych.plugins["circle-task"] = (function () {
             if (typeof keyboardListener !== "undefined") {
                 jsPsych.pluginAPI.cancelKeyboardResponse(keyboardListener);
             }
+            // responses.push(correct/total);
 
             // gather the data to store for the trial
             var trial_data = {
@@ -115,6 +125,7 @@ jsPsych.plugins["circle-task"] = (function () {
                 trialNumber: trial.trialNumber,
                 speed: trial.speed,
                 step: trial.step,
+                accuracy: correct/total,
                 responses: responses,
                 // stimulus: trial.stimulus,
             };
@@ -129,7 +140,14 @@ jsPsych.plugins["circle-task"] = (function () {
         // response listener always listening for key presses and recording them
         var record_data = function (info) {
             var keyPressTime = performance.now() - startTime;
-            console.log(`Key ${info.key} pressed at ${keyPressTime}`);
+            total += 1;
+            if (expand && info.key == 74){
+                correct += 1;
+            } else if (!expand && info.key == 70){
+                correct += 1;
+            }
+            console.log(`Key ${info.key} pressed at ${keyPressTime} and correct${correct} total${total}`);
+            
             responses.push({
                 type: "key",
                 variable: info.key,

@@ -11,8 +11,13 @@ canvas {
 
 p {
 	text-align: left;
+	size: 0.9;
 }
 p.answer {
-	text-align-last: justify;
+	text-align-last: left;
 	letter-spacing: 0.1em;
+	word-spacing: 0.1em;
+}
+input {
+	margin: 0.5em;
 }
