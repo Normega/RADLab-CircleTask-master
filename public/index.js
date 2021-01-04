@@ -86,7 +86,7 @@ var welcome0 = {
 // unsaved.push(welcome0);
 
 unsaved.push(welcome0);
-
+var notBot = true;
 var questionnaire0 = {
     type: 'survey-html-form',
     preamble: '<h1>Questionnaire:</h1></br><p> <strong>Please answer these question before you begin.</strong></p>',
@@ -94,10 +94,10 @@ var questionnaire0 = {
     <p><br />Please select 'Not often' from the options provided:</p>
 <p class="answer"> 
   <input type="radio" id="Never" name="screen1" value="1"><label for="Never"> Never</label><br/>
-  <input type="radio" id="NotOften" name="screen" value="2"><label for="NotOften"> Not Often</label><br/>
-  <input type="radio" id="Sometimes" name="screen" value="3"><label for="Sometimes"> Sometimes</label><br/>
-  <input type="radio" id="OftenAlways" name="screen" value="4"><label for="OftenAlways"> Often Always</label><br/>
-  <input type="radio" id="Always" name="screen" value="5"><label for="Always"> Always</label><br/>
+  <input type="radio" id="NotOften" name="screen1" value="2"><label for="NotOften"> Not Often</label><br/>
+  <input type="radio" id="Sometimes" name="screen1" value="3"><label for="Sometimes"> Sometimes</label><br/>
+  <input type="radio" id="OftenAlways" name="screen1" value="4"><label for="OftenAlways"> Often Always</label><br/>
+  <input type="radio" id="Always" name="screen1" value="5"><label for="Always"> Always</label><br/>
 </p>
 <p><br />Which of the following options provided is a word to describe something bad?</p>
 <p class="answer"> 
@@ -123,7 +123,24 @@ var questionnaire0 = {
   <input type="radio" id="Disagree" name="screen4" value="4"><label for="Disagree"> Disagree</label><br/>
   <input type="radio" id="StronglyDisagree" name="screen4" value="5"><label for="StronglyDisagree"> Strongly Disagree</label><br/>
 </p>
-    `
+    `,
+    on_finish: function(data){
+        console.log(JSON.parse(data.responses));
+        var response = JSON.parse(data.responses);
+        var correct = 0;
+        correct += (response['screen1'] == "2") ? 1 : 0;
+        correct += (response['screen2'] == "5") ? 1 : 0;
+        correct += (response['screen3'] == "4") ? 1 : 0;
+        correct += (response['screen4'] == "3") ? 1 : 0;
+        if(correct < 3) {
+            notBot = false;
+            jsPsych.endCurrentTimeline('The experiment was ended by pressing dumb shit.');
+        }
+
+        // if(data.key_press == 78){
+        //   jsPsych.endExperiment('The experiment was ended by pressing N.');
+        // }
+      }
 };
 
 unsaved.push(questionnaire0)
@@ -747,8 +764,21 @@ jsPsych.init({
     on_finish: function () {
         // saveData(jsPsych.data.get().json());
         //jsPsych.data.displayData();
-        startPractice(practiceCircleTask2);
-
+        if (notBot){
+            startPractice(practiceCircleTask2);
+        }
+        else{
+            var badEnding = {
+                type: "html-keyboard-response",
+                stimulus:
+                    `Unfortunately, you cannot participate in the study.`,
+                post_trial_gap: 500,
+            }
+            jsPsych.init({
+                timeline: [badEnding], //unsaved
+                show_progress_bar: true,
+            });
+        }
     },
 });
 
