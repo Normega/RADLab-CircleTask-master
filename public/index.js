@@ -178,7 +178,7 @@ var practiceCircleTask1 = {
     difficultyChange: function () {
         return 0.4
     },
-    numberOfPulses:1,//4
+    numberOfPulses:4,
     speed: 'constant',
 };
 unsaved.push(practiceCircleTask1);
@@ -234,7 +234,7 @@ var practiceCircleTask2 = {
     difficultyChange: function () {
         return 0.4
     },
-    numberOfPulses: 1, //5
+    numberOfPulses: 5, //5
     speed: 'constant',
 };
 unsaved2.push(practiceCircleTask2);
@@ -289,7 +289,7 @@ var practiceCircleTask3 = {
     difficultyChange: function () {
         return 0.7;
     },
-    numberOfPulses: 1, // 8
+    numberOfPulses: 8, // 8
     speed: 'up',
 };
 // timeline.push(practiceCircleTask3);
@@ -347,7 +347,7 @@ var practiceCircleTask4 = {
     difficultyChange: function () {
         return 0.2;
     },
-    numberOfPulses: 2, //8
+    numberOfPulses: 8, //8
     speed: 'down',
 };
 // timeline.push(practiceCircleTask4);
