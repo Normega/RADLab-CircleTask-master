@@ -24,7 +24,7 @@ firebase.auth().onAuthStateChanged((user) => {
     // User is signed in, see docs for a list of available properties
     // https://firebase.google.com/docs/reference/js/firebase.User
     var uid = user.uid;
-    console.log(uid);
+    // console.log(uid);
     // ...
   } else {
     // User is signed out
@@ -44,6 +44,8 @@ firebase.auth().onAuthStateChanged((user) => {
 var timeline = [];
 var unsaved = [];
 var unsaved2 = [];
+
+
 //Testing questionnaire
 var workerId = {
     type: 'survey-html-form',
@@ -82,8 +84,6 @@ var welcome0 = {
         "Welcome to our study! Before we get started we ask that you answer a few questions to make sure that you are a live human participant.",
     post_trial_gap: 500,
 };
-
-// unsaved.push(welcome0);
 
 unsaved.push(welcome0);
 var notBot = true;
@@ -178,7 +178,7 @@ var practiceCircleTask1 = {
     difficultyChange: function () {
         return 0.4
     },
-    numberOfPulses:4,
+    numberOfPulses:1,//4
     speed: 'constant',
 };
 unsaved.push(practiceCircleTask1);
@@ -209,13 +209,12 @@ var practiceInstructions2 = {
     show_clickable_nav: true,
     post_trial_gap: 500,
     on_finish:()=>{
-        jsPsych.endCurrentTimeline();
+        // jsPsych.endCurrentTimeline();
         // startPractice(practiceInstructions2);
         // jsPsych.resumeExperiment();
     }
 };
-unsaved.push(practiceInstructions2);
-
+unsaved2.push(practiceInstructions2);
 
 
 var practiceCircleTask2 = {
@@ -235,10 +234,10 @@ var practiceCircleTask2 = {
     difficultyChange: function () {
         return 0.4
     },
-    numberOfPulses: 5,
+    numberOfPulses: 1, //5
     speed: 'constant',
 };
-// timeline.push(practiceCircleTask2);
+unsaved2.push(practiceCircleTask2);
 
 var awareness2 = {
     type: "html-keyboard-response",
@@ -247,7 +246,9 @@ var awareness2 = {
     prompt: "<p>1 Yes.   2 No. </p>",
     data: { taskType: "Circle Task 1", trial: -1 },
     on_finish: function (data) {
+        jsPsych.endCurrentTimeline();
         return; // Practice
+
     },
 };
 unsaved2.push(awareness2);
@@ -269,7 +270,7 @@ var practiceInstructions3 = {
     on_finish: ()=>{
     }
 };
-unsaved2.push(practiceInstructions3);
+// unsaved2.push(practiceInstructions3);
 
 var practiceCircleTask3 = {
     type: "circle-task",
@@ -288,7 +289,7 @@ var practiceCircleTask3 = {
     difficultyChange: function () {
         return 0.7;
     },
-    numberOfPulses: 8,
+    numberOfPulses: 1, // 8
     speed: 'up',
 };
 // timeline.push(practiceCircleTask3);
@@ -346,7 +347,7 @@ var practiceCircleTask4 = {
     difficultyChange: function () {
         return 0.2;
     },
-    numberOfPulses: 8,
+    numberOfPulses: 2, //8
     speed: 'down',
 };
 // timeline.push(practiceCircleTask4);
@@ -764,8 +765,17 @@ jsPsych.init({
     on_finish: function () {
         // saveData(jsPsych.data.get().json());
         //jsPsych.data.displayData();
+        var length = JSON.parse(jsPsych.data.get().json()).length;
+        console.log(JSON.parse(jsPsych.data.get().json())[length-1]["key_press"]);
+        // console.log(data.key_press);
+        
         if (notBot){
-            startPractice(practiceCircleTask2);
+            console.log("end unsaved");
+            if(JSON.parse(jsPsych.data.get().json())[length-1]["key_press"] == 50){
+                redo(practiceCircleTask1,1);
+            } else {
+                startPractice2();
+            }
         }
         else{
             var badEnding = {
@@ -902,11 +912,14 @@ function timelineLoop(timeline){
         on_finish: () => {
             console.log(JSON.parse(jsPsych.data.get().json()));
 
-            var accuracy1 = JSON.parse(jsPsych.data.get().json())[0]['accuracy'];
-            var accuracy2 = JSON.parse(jsPsych.data.get().json())[2]['accuracy'];
+            var accuracy1 = JSON.parse(jsPsych.data.get().json())[1]['accuracy'];
+            var accuracy2 = JSON.parse(jsPsych.data.get().json())[3]['accuracy'];
             
-            var answer1 = JSON.parse(jsPsych.data.get().json())[1]['correct'];
-            var answer2 = JSON.parse(jsPsych.data.get().json())[3]['correct'];
+            var answer1 = JSON.parse(jsPsych.data.get().json())[2]['correct'];
+            var answer2 = JSON.parse(jsPsych.data.get().json())[4]['correct'];
+
+            // var aware = isAware();
+
             console.log(accuracy1,accuracy2,answer1,answer2);
             if(accuracy1 == null || accuracy1 < 0.8 || accuracy2 == null || accuracy2 < 0.8 ){
                 timelineLoop(timeline);
@@ -933,25 +946,20 @@ function timelineLoop(timeline){
 
 }
 
-function startPractice(task){
+function startPractice2(){
     var loop_node = {
-        timeline: [task],
+        timeline: unsaved2,
         on_finish: () => {
-            console.log(jsPsych.data.get().json());  
-            if(JSON.parse(jsPsych.data.get().json())[0]['accuracy'] == null || JSON.parse(jsPsych.data.get().json())[0]['accuracy'] < 0.8){
+            console.log(jsPsych.data.get().json());
+            var aware = isAware();
+            var accuracte = isAccurate(1);
+            console.log(aware, accuracte);
+            if(!(accuracte && aware)){
                 // jsPsych.endCurrentTimeline();
-                redo(task);
+                redo(practiceCircleTask2,2);
             } else{
-                jsPsych.init({
-                    timeline: unsaved2,
-                    show_progress_bar: true,
-                    on_finish: function () {
-                        // saveData(jsPsych.data.get().json());
-                        //jsPsych.data.displayData();
-                        timelineLoop([practiceCircleTask3,awareness3,practiceCircleTask4,awareness4]);
-                
-                    },
-                });
+                console.log("Yo the last parts");
+                timelineLoop([practiceInstructions3, practiceCircleTask3,awareness3,practiceCircleTask4,awareness4]);
             }
         },
     }
@@ -973,7 +981,7 @@ async function quickShow(tLine){
 
 }
 
-function redo(task){
+function redo(task, checks){ // TODO add awareness and generalize, checks: 1 for awareness and 2 for both
     var redoInstructions = {
         type: "instructions",
         pages: [
@@ -983,13 +991,62 @@ function redo(task){
         show_clickable_nav: true,
         post_trial_gap: 500,
     };
+    var aware = {
+        type: "html-keyboard-response",
+        stimulus: "<p>In the previous trial did you match your breath to the pulsing circle?</p>",
+        choices: ["1", "2"],
+        prompt: "<p>1 Yes.   2 No. </p>",
+        // data: { taskType: "Circle Task 1", trial: i + 1 },
+    };
     var repeat = {
-        timeline: [redoInstructions,task],
+        timeline: [redoInstructions,task,aware],
         on_finish: () => {
             console.log(jsPsych.data.get().json());  
-            console.log(JSON.parse(jsPsych.data.get().json())[1]['accuracy']);
+            console.log(JSON.parse(jsPsych.data.get().json()));
+            if (checks == 1){
+                console.log(!isAware());
+
+                if(!isAware()){
+                    redo(task,1);
+                }
+                else {
+                    // TODO practice 2 next part
+                    console.log("YAY!");
+                    startPractice2();
+                    return;
+                }
+            }
+            else{
+                var aware = isAware();
+                var accuracte = isAccurate(1);
+                console.log(aware, accuracte);
+                // console.log("Nopp!")
+
+                if(!(accuracte && aware)){
+                    redo(practiceCircleTask2,2);
+                } else {
+                    console.log("YOo 3 and 4 time");
+                    timelineLoop([practiceInstructions3, practiceCircleTask3,awareness3,practiceCircleTask4,awareness4]);
+                }
+            }            
+        },
+    }
+    jsPsych.init(repeat);
+}
+
+function repeatAwareness(task){ // Assume it ran once and access previous awareness results
+    var aware = {
+        type: "html-keyboard-response",
+        stimulus: "<p>In the previous trial did you match your breath to the pulsing circle?</p>",
+        choices: ["1", "2"],
+        prompt: "<p>1 Yes.   2 No. </p>",
+        // data: { taskType: "Circle Task 1", trial: i + 1 },
+    };
+    var repeat = {
+        timeline: [task,aware],
+        on_finish: () => {
             if(JSON.parse(jsPsych.data.get().json())[1]['accuracy'] == null || JSON.parse(jsPsych.data.get().json())[1]['accuracy'] < 0.8){
-                redo(task);
+                redo(circleTask2, 2);
             } else {
                 jsPsych.init({
                     timeline: unsaved2,
@@ -997,7 +1054,7 @@ function redo(task){
                     on_finish: function () {
                         // saveData(jsPsych.data.get().json());
                         //jsPsych.data.displayData();
-                        timelineLoop([practiceCircleTask3,awareness3,practiceCircleTask4,awareness4]);
+                        timelineLoop([practiceInstructions3, practiceCircleTask3,awareness3,practiceCircleTask4,awareness4]);
                 
                     },
                 });
@@ -1005,5 +1062,13 @@ function redo(task){
             
         },
     }
-    jsPsych.init(repeat);
+    jsPsych.init(repeat);   
+}
+
+function isAware(){ //Call after awareness task
+    return JSON.parse(jsPsych.data.get().json())[2]["key_press"] == 49
+}
+
+function isAccurate(pos){
+    return !(JSON.parse(jsPsych.data.get().json())[pos]['accuracy'] == null || JSON.parse(jsPsych.data.get().json())[pos]['accuracy'] < 0.8);
 }
