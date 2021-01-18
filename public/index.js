@@ -81,7 +81,7 @@ let difficulty = 0.5;
 var welcome0 = {
     type: "html-keyboard-response",
     stimulus:
-        "Welcome to our study! Before we get started we ask that you answer a few questions to make sure that you are a live human participant.",
+        `Welcome to our study! Before we get started we ask that you answer a few questions to make sure that you are a live human participant.`,
     post_trial_gap: 500,
 };
 
@@ -149,10 +149,14 @@ unsaved.push(questionnaire0)
 var practiceInstructions1 = {
     type: "instructions",
     pages: [
+        "<p class='image'><img src='/assets/inst1.jpg' /></p>",
+        "<p class='image'><img src='/assets/inst2.jpg' /></p>",
+        "<p class='image'><img src='/assets/inst3.jpg' /></p>",
+        "<p class='image'><img src='/assets/inst4.jpg' /></p>",
         "<p><b>Instructions:</b></p>" +
-        "<p>Now we are going to practice breathing along with the circle.</p>",
-        "<p>We ask that you match your breath to the circle."+ 
-        " Please breath-in when the circle expands and breath-out when the circle shrinks </p>",
+        "<p>Now we are going to practice breathing along with the circle. <br/> <img src='/assets/circle.jpg'/></p>",
+        "<p class='image'><img src='/assets/inst5.jpg' /></p>",
+        `<p style="size:3em;">Let's Practice Matching your breath to the circle for 30 seconds...</p>`,
 
     ],
     show_clickable_nav: true,
@@ -200,11 +204,11 @@ var practiceInstructions2 = {
     type: "instructions",
     pages: [
         "<p><b>Instructions:</b></p>" +
-        "<p>Nice Job! Now we are going to practice breathing along with the circle once again. "+
+        "<p>Nice Job! Now we are going to practice breathing along with the circle once again. <br/>"+
         "This time we also ask that you also press a button when you breath in and breath out.</p>",
-        "<p>Match your breath to the pulsing circle</p>",
-        "<p>When the circle is <strong>expanding Breath in</strong> and Press the <strong>‘J’ Key</strong> on the keyboard</p>",
-        "<p>When the circle is <strong>shrinking Breath out</strong> and Press the <strong>‘F’ Key</strong> on the keyboard</p>",
+        "<p>As the circle gets bigger: <br/><strong>Breath In</strong> and  <strong>Press the‘J’ Key</strong> on the keyboard</p>",
+        "<p>As the circle gets smaller: <br/><strong>Breath out</strong> and <strong>Press the ‘F’ Key</strong> on the keyboard</p>",
+        `<p style="size:3em;">Let's Practice Pressing the Keyboard while Matching your breath at the same time...</p>`
     ],
     show_clickable_nav: true,
     post_trial_gap: 500,
@@ -1072,3 +1076,30 @@ function isAware(){ //Call after awareness task
 function isAccurate(pos){
     return !(JSON.parse(jsPsych.data.get().json())[pos]['accuracy'] == null || JSON.parse(jsPsych.data.get().json())[pos]['accuracy'] < 0.8);
 }
+
+
+
+
+// # {
+//     #   /* Visit https://firebase.google.com/docs/database/security to learn more about security rules. */
+//     #   "rules": {
+//     #     "$uid": {
+//     #         // Allow only authenticated content owners access to their data
+//     #         ".read": "auth.uid != null",
+//     #         ".write": "auth.uid != null"
+//     #       }
+//     #   }
+      
+//     # }
+    
+//     # {
+//     #   /* Visit https://firebase.google.com/docs/database/security to learn more about security rules. */
+//     #   "rules": {
+//     #     ".read": false,
+//     #     ".write": "auth.uid != null",
+//     #   	"foo": {
+//     #       ".validate": "newData.isString()"
+//     #     }
+//     #   }
+      
+//     # }

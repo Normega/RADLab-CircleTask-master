@@ -18,6 +18,15 @@ p.answer {
 	letter-spacing: 0.1em;
 	word-spacing: 0.1em;
 }
+
+p.image {
+	justify-content: center;
+}
+
+img {
+	max-height: 25em;
+}
+
 input {
 	margin: 0.5em;
 }
