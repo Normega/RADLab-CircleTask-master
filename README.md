@@ -20,7 +20,7 @@ Refer to https://nodejs.org/en/ to install nodejs
 Clone the project onto your local machine:
 
 ```bash
-git clone https://github.com/zohaibxrehman/RADLab-CircleTask
+git clone https://github.com/Fenil-P/RADLab-CircleTask-master
 ```
 
 Install all the npm packages. Go into the project folder and install all npm packages:
