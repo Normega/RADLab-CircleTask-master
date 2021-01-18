@@ -774,7 +774,7 @@ jsPsych.init({
         // console.log(data.key_press);
         
         if (notBot){
-            console.log("end unsaved");
+            // console.log("end unsaved");
             if(JSON.parse(jsPsych.data.get().json())[length-1]["key_press"] == 50){
                 redo(practiceCircleTask1,1);
             } else {
@@ -962,26 +962,12 @@ function startPractice2(){
                 // jsPsych.endCurrentTimeline();
                 redo(practiceCircleTask2,2);
             } else{
-                console.log("Yo the last parts");
+                // console.log("Yo the last parts");
                 timelineLoop([practiceInstructions3, practiceCircleTask3,awareness3,practiceCircleTask4,awareness4]);
             }
         },
     }
     jsPsych.init(loop_node);
-
-}
-
-
-async function quickShow(tLine){
-    tLine.forEach((t)=>{
-        var loop_node = {
-            timeline: [t],
-            on_finish: ()=>{console.log("hi")}
-        }
-        jsPsych.init(loop_node);
-    });
-    console.log(tLine)
-    
 
 }
 
@@ -1015,7 +1001,7 @@ function redo(task, checks){ // TODO add awareness and generalize, checks: 1 for
                 }
                 else {
                     // TODO practice 2 next part
-                    console.log("YAY!");
+                    // console.log("YAY!");
                     startPractice2();
                     return;
                 }
@@ -1029,44 +1015,13 @@ function redo(task, checks){ // TODO add awareness and generalize, checks: 1 for
                 if(!(accuracte && aware)){
                     redo(practiceCircleTask2,2);
                 } else {
-                    console.log("YOo 3 and 4 time");
+                    // console.log("YOo 3 and 4 time");
                     timelineLoop([practiceInstructions3, practiceCircleTask3,awareness3,practiceCircleTask4,awareness4]);
                 }
             }            
         },
     }
     jsPsych.init(repeat);
-}
-
-function repeatAwareness(task){ // Assume it ran once and access previous awareness results
-    var aware = {
-        type: "html-keyboard-response",
-        stimulus: "<p>In the previous trial did you match your breath to the pulsing circle?</p>",
-        choices: ["1", "2"],
-        prompt: "<p>1 Yes.   2 No. </p>",
-        // data: { taskType: "Circle Task 1", trial: i + 1 },
-    };
-    var repeat = {
-        timeline: [task,aware],
-        on_finish: () => {
-            if(JSON.parse(jsPsych.data.get().json())[1]['accuracy'] == null || JSON.parse(jsPsych.data.get().json())[1]['accuracy'] < 0.8){
-                redo(circleTask2, 2);
-            } else {
-                jsPsych.init({
-                    timeline: unsaved2,
-                    show_progress_bar: true,
-                    on_finish: function () {
-                        // saveData(jsPsych.data.get().json());
-                        //jsPsych.data.displayData();
-                        timelineLoop([practiceInstructions3, practiceCircleTask3,awareness3,practiceCircleTask4,awareness4]);
-                
-                    },
-                });
-            }
-            
-        },
-    }
-    jsPsych.init(repeat);   
 }
 
 function isAware(){ //Call after awareness task
