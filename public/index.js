@@ -149,13 +149,13 @@ unsaved.push(questionnaire0)
 var practiceInstructions1 = {
     type: "instructions",
     pages: [
-        "<p class='image'><img src='/assets/inst1.jpg' /></p>",
-        "<p class='image'><img src='/assets/inst2.jpg' /></p>",
-        "<p class='image'><img src='/assets/inst3.jpg' /></p>",
-        "<p class='image'><img src='/assets/inst4.jpg' /></p>",
+        "<p class='image'><img src='/assets/inst1.png' /></p>",
+        "<p class='image'><img src='/assets/inst2.png' /></p>",
+        "<p class='image'><img src='/assets/inst3.png' /></p>",
+        "<p class='image'><img src='/assets/inst4.png' /></p>",
         "<p><b>Instructions:</b></p>" +
-        "<p>Now we are going to practice breathing along with the circle. <br/> <img src='/assets/circle.jpg'/></p>",
-        "<p class='image'><img src='/assets/inst5.jpg' /></p>",
+        "<p>Now we are going to practice breathing along with the circle. <br/> <img src='/assets/circle.png'/></p>",
+        "<p class='image'><img src='/assets/inst5.png' /></p>",
         `<p style="size:3em;">Let's Practice Matching your breath to the circle for 30 seconds...</p>`,
 
     ],
