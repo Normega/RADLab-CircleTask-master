@@ -125,7 +125,7 @@ jsPsych.plugins["circle-task"] = (function () {
                 trialNumber: trial.trialNumber,
                 speed: trial.speed,
                 step: trial.step,
-                accuracy: correct/total,
+                accuracy: total/trial.numberOfPulses/2, // Previous for real accuracy: correct/total,
                 responses: responses,
                 // stimulus: trial.stimulus,
             };
@@ -219,10 +219,14 @@ jsPsych.plugins["circle-task"] = (function () {
 
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+            var prompt = document.getElementById("prompt");
             if (expand) {
                 radius += dr;
+                prompt.innerHTML = `BREATH IN  + PRESS “J”`;
+
             } else {
                 radius -= dr;
+                prompt.innerHTML = `BREATH OUT  + PRESS “F”`;
             }
             drawBall();
             if (expand && radius >= canvas.height / 2) {

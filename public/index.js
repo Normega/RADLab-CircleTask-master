@@ -170,7 +170,7 @@ var practiceCircleTask1 = {
     trialNumber: -1,
     stimulus:
         "<canvas id='myCanvas' width='800' height='500'></canvas>" +
-        "<b>Match your breath to the pulsing circle</b>.</p>",
+        "<p id='prompt' style='text-align:center;font-weight:bold;'></p>",
     choices: ["f", "j"],
     post_trial_gap: 1000,
     response_ends_trial: false,
@@ -226,7 +226,7 @@ var practiceCircleTask2 = {
     trialNumber: -1,
     stimulus:
         "<canvas id='myCanvas' width='800' height='500'></canvas>" +
-        "<b>Press 'J' when breathing in and 'F' when breathing out with the pulsing circle</b>.</p>",
+        "<p id='prompt' style='text-align:center;font-weight:bold;'></p>",
     choices: ["f", "j"],
     post_trial_gap: 1000,
     response_ends_trial: false,
@@ -281,7 +281,7 @@ var practiceCircleTask3 = {
     trialNumber: -1,
     stimulus:
         "<canvas id='myCanvas' width='800' height='500'></canvas>" +
-        "<b>Press 'J' when breathing in and 'F' when breathing out with the pulsing circle</b>.</p>",
+        "<p id='prompt' style='text-align:center;font-weight:bold;'></p>",
     choices: ["f", "j"],
     post_trial_gap: 1000,
     response_ends_trial: false,
@@ -339,7 +339,7 @@ var practiceCircleTask4 = {
     trialNumber: -1,
     stimulus:
         "<canvas id='myCanvas' width='800' height='500'></canvas>" +
-        "<b>Press 'J' when breathing in and 'F' when breathing out with the pulsing circle</b>.</p>",
+        "<p id='prompt' style='text-align:center;font-weight:bold;'></p>",
     choices: ["f", "j"],
     post_trial_gap: 1000,
     response_ends_trial: false,
@@ -459,8 +459,8 @@ for (let i = 0; i < NUMBER_OF_TRIALS_1; i++) {
         trialNumber: i + 1,
         stimulus:
             "<canvas id='myCanvas' width='800' height='500'></canvas>" +
-            "<b>Recording response times... </b>.</p>",
-        choices: ["f", "j"],
+            "<p id='prompt' style='text-align:center;font-weight:bold;'></p>",
+            choices: ["f", "j"],
         post_trial_gap: 1000,
         response_ends_trial: false,
         step: function () {
@@ -634,8 +634,8 @@ for (let i = 0; i < NUMBER_OF_TRIALS_2; i++) {
         trialNumber: i + 1,
         stimulus:
             "<canvas id='myCanvas' width='800' height='500'></canvas>" +
-            "<b>Recording response times... </b>.</p>",
-        choices: ["f", "j", " "],
+            "<p id='prompt' style='text-align:center;font-weight:bold;'></p>",
+            choices: ["f", "j", " "],
         post_trial_gap: 500,
         response_ends_trial: false,
         difficultyChange: 0.5,
