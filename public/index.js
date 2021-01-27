@@ -81,15 +81,15 @@ let difficulty = 0.5;
 var welcome0 = {
     type: "html-keyboard-response",
     stimulus:
-        `Welcome to our study! Before we get started we ask that you answer a few questions to make sure that you are a live human participant.`,
+        `Welcome to our study! Before we get started we ask that you answer a few questions to make sure that you are a live human participant.<br/>
+        Press any key to continue….`,
     post_trial_gap: 500,
 };
-
 unsaved.push(welcome0);
 var notBot = true;
 var questionnaire0 = {
     type: 'survey-html-form',
-    preamble: '<h1>Questionnaire:</h1></br><p> <strong>Please answer these question before you begin.</strong></p>',
+    preamble: `<h1>Questionnaire:</h1></br><p> <strong>Please answer these question before you begin.</strong></p>`,
     html: `
     <p><br />Please select 'Not often' from the options provided:</p>
 <p class="answer"> 
@@ -154,7 +154,7 @@ var practiceInstructions1 = {
         "<p class='image'><img src='/assets/inst3.png' /></p>",
         "<p class='image'><img src='/assets/inst4.png' /></p>",
         "<p><b>Instructions:</b></p>" +
-        "<p>Now we are going to practice breathing along with the circle. <br/> <img src='/assets/circle.png'/></p>",
+        "<p style='justify-content:center;'>Now we are going to practice breathing along with the circle. <br/> <img style='height:18em;justify-content:center;' src='/assets/circle.png'/></p>",
         "<p class='image'><img src='/assets/inst5.png' /></p>",
         `<p style="size:3em;">Let's Practice Matching your breath to the circle for 30 seconds...</p>`,
 
@@ -170,7 +170,7 @@ var practiceCircleTask1 = {
     trialNumber: -1,
     stimulus:
         "<canvas id='myCanvas' width='800' height='500'></canvas>" +
-        "<p id='prompt' style='text-align:center;font-weight:bold;'></p>",
+        "<p id='prompt' style='text-align:center;font-weight:bold;'> Breathe In and Out with the Circle</p>",
     choices: ["f", "j"],
     post_trial_gap: 1000,
     response_ends_trial: false,
@@ -208,9 +208,11 @@ var practiceInstructions2 = {
         "This time we also ask that you also press a button when you breath in and breath out.</p>",
         "<p>As the circle gets bigger: <br/><strong>Breath In</strong> and  <strong>Press the‘J’ Key</strong> on the keyboard</p>",
         "<p>As the circle gets smaller: <br/><strong>Breath out</strong> and <strong>Press the ‘F’ Key</strong> on the keyboard</p>",
-        `<p style="size:3em;">Let's Practice Pressing the Keyboard while Matching your breath at the same time...</p>`
+        `<p style="size:3em;">Let's Practice Pressing the Keyboard while Matching Your Breath at the same time... <br /> Press Spacebar to Start… 
+        </p>`
     ],
     show_clickable_nav: true,
+    key_forward: 32,
     post_trial_gap: 500,
     on_finish:()=>{
         // jsPsych.endCurrentTimeline();
@@ -300,12 +302,12 @@ var practiceCircleTask3 = {
 
 var awareness3 = {
     type: "html-keyboard-response",
-        stimulus: "<p>Did your breathing rate Speed up, slow down or stay constant in this trial?</p>",
-        choices: ["1", "2", "3"],
-        prompt: "<p>1 up. 2 down. 3 constant</p>",
+        stimulus: "<p class='image'><img src='./Feedback.jpg' /></p>",
+        choices: [37,38,39],
+        prompt: "",
         data: { taskType: "Circle Task Practice Speed Down", trial: -1},
         on_finish: function (data) {
-            const keyToResponse = { 49: "up", 50: "down", 51: "constant" };
+            const keyToResponse = { 39: "up", 37: "down", 38: "constant" };
             if (keyToResponse[data.key_press] === 'up') {
                 console.log("correct");
                 // 70 is the numeric code for f
@@ -358,12 +360,12 @@ var practiceCircleTask4 = {
 
 var awareness4 = {
     type: "html-keyboard-response",
-        stimulus: "<p>Did your breathing rate Speed up, slow down or stay constant in this trial?</p>",
-        choices: ["1", "2", "3"],
-        prompt: "<p>1 up. 2 down. 3 constant</p>",
+        stimulus: "<p class='image'><img src='./Feedback.jpg' /></p>",
+        choices: [37,38,39],
+        prompt: "",
         data: { taskType: "Circle Task Practice Speed Down", trial: -1},
         on_finish: function (data) {
-            const keyToResponse = { 49: "up", 50: "down", 51: "constant" };
+            const keyToResponse = { 39: "up", 37: "down", 38: "constant" };
             if (keyToResponse[data.key_press] === 'down') {
                 console.log("correct");
                 // 70 is the numeric code for f
@@ -446,6 +448,23 @@ let speeds1 = [
     "constant",
 ];
 
+var correctAnswer = {
+    type: "instructions",
+    pages: [
+        "<p class='image'><img src='./correctAnswer.jpg' />",    
+    ],
+    show_clickable_nav: true,
+    post_trial_gap: 500,
+};
+
+var wrongAnswer = {
+    type: "instructions",
+    pages: [
+        "<p class='image'><img src='./wrongAnswer.jpg' />",    
+    ],
+    show_clickable_nav: true,
+    post_trial_gap: 500,
+};
 shuffle(speeds1);
 
 var isFirstTrial = true; // needed because first trial difficulty logic is different
@@ -522,12 +541,12 @@ for (let i = 0; i < NUMBER_OF_TRIALS_1; i++) {
 
     var awareness = {
         type: "html-keyboard-response",
-        stimulus: "<p>Speed?</p>",
-        choices: ["1", "2", "3"],
-        prompt: "<p>1 up. 2 down. 3 constant</p>",
+        stimulus: "<p class='image'><img src='./Feedback.jpg' /></p>",
+        choices: [37,38,39],
+        prompt: "",
         data: { taskType: "Circle Task 1", trial: i + 1 },
         on_finish: function (data) {
-            const keyToResponse = { 49: "up", 50: "down", 51: "constant" };
+            const keyToResponse = { 39: "up", 37: "down", 38: "constant" };
             if (keyToResponse[data.key_press] === speeds1[i]) {
                 console.log(speeds1[i], "correct");
                 conseqCorrect += 1;
@@ -541,6 +560,37 @@ for (let i = 0; i < NUMBER_OF_TRIALS_1; i++) {
         },
     };
     timeline.push(awareness);
+    
+    timeline.push(buildCertainty('circle-task-1-'+String(i)));
+    
+    var if_right = {
+        timeline: [correctAnswer],
+        conditional_function: function(){
+            // get the data from the previous trial,
+            // and check which key was pressed
+            console.log(jsPsych.data.get().last(2).values()[0]);
+            var answer = jsPsych.data.get().last(2).values()[0].correct;
+            // console.log(typeof accuracy , accuracy  >= 0.8)
+            
+            return answer;
+        }
+    }
+    timeline.push(if_right)
+    var if_wrong = {
+        timeline: [wrongAnswer],
+        conditional_function: function(){
+            // get the data from the previous trial,
+            // and check which key was pressed
+            console.log(jsPsych.data.get().last(2).values());
+            console.log(jsPsych.data.get().last(2).values()[0]);
+            var answer = jsPsych.data.get().last(2).values()[0].trial_type == "survey-html-form";
+            // console.log(typeof accuracy , accuracy  >= 0.8)
+            
+            return !answer;
+        }
+    }
+    timeline.push(if_wrong);
+
     var awarenessR = {
         type: "html-keyboard-response",
         stimulus: "<p>In the previous trial did you match your breath to the pulsing circle?</p>",
@@ -673,12 +723,12 @@ for (let i = 0; i < NUMBER_OF_TRIALS_2; i++) {
 
     var awareness = {
         type: "html-keyboard-response",
-        stimulus: "<p>Speed?</p>",
-        choices: ["1", "2", "3"],
-        prompt: "<p>1 up. 2 down. 3 constant</p>",
+        stimulus: "<p class='image'><img src='./Feedback.jpg' /></p>",
+        choices: [37,38,39],
+        prompt: "",
         data: { taskType: "Circle Task 2", trial: i + 1 },
         on_finish: function (data) {
-            const keyToResponse = { 49: "up", 50: "down", 51: "constant" };
+            const keyToResponse = { 39: "up", 37: "down", 38: "constant" };
             if (keyToResponse[data.key_press] === speeds2[i]) {
                 console.log(speeds2[i], "correct");
                 conseqCorrect += 1;
@@ -692,6 +742,37 @@ for (let i = 0; i < NUMBER_OF_TRIALS_2; i++) {
         },
     };
     timeline.push(awareness);
+        
+    timeline.push(buildCertainty('circle-task-1-'+String(i)));
+    
+    var if_right = {
+        timeline: [correctAnswer],
+        conditional_function: function(){
+            // get the data from the previous trial,
+            // and check which key was pressed
+            console.log(jsPsych.data.get().last(2).values()[0]);
+            var answer = jsPsych.data.get().last(2).values()[0].correct;
+            // console.log(typeof accuracy , accuracy  >= 0.8)
+            
+            return answer;
+        }
+    }
+    timeline.push(if_right)
+    var if_wrong = {
+        timeline: [wrongAnswer],
+        conditional_function: function(){
+            // get the data from the previous trial,
+            // and check which key was pressed
+            console.log(jsPsych.data.get().last(2).values());
+            console.log(jsPsych.data.get().last(2).values()[0]);
+            var answer = jsPsych.data.get().last(2).values()[0].trial_type == "survey-html-form";
+            // console.log(typeof accuracy , accuracy  >= 0.8)
+            
+            return !answer;
+        }
+    }
+    timeline.push(if_wrong);
+
     var awarenessR = {
         type: "html-keyboard-response",
         stimulus: "<p>In the previous trial did you match your breath to the pulsing circle?</p>",
@@ -908,6 +989,26 @@ function buildQuestionnaire(questions) {
     })
     return result;
 }
+function buildCertainty(identifier) {
+    //import list and allows edits of questions
+    var question = {
+        type: 'survey-html-form',
+        preamble: `<p style="justify-content:center;" class='image'><img src='./certainty.jpg' /> <br /></p><br />`,
+        html: `<p  class="answer"><br /> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<strong>NOT SURE &nbsp&nbsp&nbsp</strong>  <span> 
+        <label for="${'q' + identifier + '-1'}"> 1</label><input type="radio" id="${'q' + identifier + '-1'}" name="${'q' + identifier}" value="1" >&nbsp
+        <label for="${'q' + identifier + '-2'}"> 2</label><input type="radio" id="${'q' + identifier + '-2'}" name="${'q' + identifier}" value="2" >&nbsp
+        <label for="${'q' + identifier + '-3'}"> 3</label><input type="radio" id="${'q' + identifier + '-3'}" name="${'q' + identifier}" value="3" checked>&nbsp
+        <label for="${'q' + identifier + '-4'}"> 4</label><input type="radio" id="${'q' + identifier + '-4'}" name="${'q' + identifier}" value="4" >&nbsp
+        <label for="${'q' + identifier + '-5'}"> 5</label><input type="radio" id="${'q' + identifier + '-5'}" name="${'q' + identifier}" value="5" > &nbsp
+        <label for="${'q' + identifier + '-6'}"> 6</label><input type="radio" id="${'q' + identifier + '-6'}" name="${'q' + identifier}" value="6" > &nbsp
+        <label for="${'q' + identifier + '-7'}"> 7</label><input type="radio" id="${'q' + identifier + '-7'}" name="${'q' + identifier}" value="7" > 
+        </span><strong>&nbsp&nbsp&nbsp VERY CONFIDENT</strong><br /></p>`
+    };
+    return question;
+}
+
+
+
 var t = timeline
 
 function timelineLoop(timeline){

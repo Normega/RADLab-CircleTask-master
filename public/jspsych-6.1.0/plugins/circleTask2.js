@@ -231,11 +231,11 @@ jsPsych.plugins["circle-task-two"] = (function () {
             var prompt = document.getElementById("prompt");
             if (expand) {
                 radius += dr;
-                prompt.innerHTML = `BREATH IN  + PRESS “J”`;
+                prompt.innerHTML = `BREATHE IN  + PRESS “J”`;
 
             } else {
                 radius -= dr;
-                prompt.innerHTML = `BREATH OUT  + PRESS “F”`;
+                prompt.innerHTML = `BREATHE OUT  + PRESS “F”`;
             }
             drawBall();
             if (expand && radius >= canvas.height / 2) {
