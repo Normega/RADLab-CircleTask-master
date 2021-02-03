@@ -166,7 +166,7 @@ unsaved.push(practiceInstructions1);
 
 
 var practiceCircleTask1 = {
-    type: "circle-task",
+    type: "circle-task-practice",
     trialNumber: -1,
     stimulus:
         "<canvas id='myCanvas' width='800' height='500'></canvas>" +
@@ -190,8 +190,8 @@ unsaved.push(practiceCircleTask1);
 var awareness1 = {
     type: "html-keyboard-response",
     stimulus: "<p>Did you match your breath to the pulsing circle?</p>",
-    choices: ["1", "2"],
-    prompt: "<p>1 Yes.   2 No. </p>",
+    choices: ["y", "n"],
+    prompt: "<p>Y - Yes. <br/>  N - No. </p>",
     data: { taskType: "Circle Task 1", trial: -1 },
     on_finish: function (data) {
         // startPractice(practiceCircleTask2);
@@ -248,8 +248,8 @@ unsaved2.push(practiceCircleTask2);
 var awareness2 = {
     type: "html-keyboard-response",
     stimulus: "<p>Did you press 'J' when breathing in and 'F' when breathing out with the pulsing circle?</p>",
-    choices: ["1", "2"],
-    prompt: "<p>1 Yes.   2 No. </p>",
+    choices: ["y", "n"],
+    prompt: "<p>Y - Yes. <br/>  N - No. </p>",
     data: { taskType: "Circle Task 1", trial: -1 },
     on_finish: function (data) {
         jsPsych.endCurrentTimeline();
@@ -302,7 +302,7 @@ var practiceCircleTask3 = {
 
 var awareness3 = {
     type: "html-keyboard-response",
-        stimulus: "<p class='image'><img src='./Feedback.jpg' /></p>",
+        stimulus: "<p class='image'><img src='/assets/Feedback.jpg' /></p>",
         choices: [37,38,39],
         prompt: "",
         data: { taskType: "Circle Task Practice Speed Down", trial: -1},
@@ -360,7 +360,7 @@ var practiceCircleTask4 = {
 
 var awareness4 = {
     type: "html-keyboard-response",
-        stimulus: "<p class='image'><img src='./Feedback.jpg' /></p>",
+        stimulus: "<p class='image'><img src='/assets/Feedback.jpg' /></p>",
         choices: [37,38,39],
         prompt: "",
         data: { taskType: "Circle Task Practice Speed Down", trial: -1},
@@ -541,7 +541,7 @@ for (let i = 0; i < NUMBER_OF_TRIALS_1; i++) {
 
     var awareness = {
         type: "html-keyboard-response",
-        stimulus: "<p class='image'><img src='./Feedback.jpg' /></p>",
+        stimulus: "<p class='image'><img src='/assets/Feedback.jpg' /></p>",
         choices: [37,38,39],
         prompt: "",
         data: { taskType: "Circle Task 1", trial: i + 1 },
@@ -594,8 +594,8 @@ for (let i = 0; i < NUMBER_OF_TRIALS_1; i++) {
     var awarenessR = {
         type: "html-keyboard-response",
         stimulus: "<p>In the previous trial did you match your breath to the pulsing circle?</p>",
-        choices: ["1", "2"],
-        prompt: "<p>1 Yes.   2 No. </p>",
+        choices: ["y", "n"],
+        prompt: "<p>Y - Yes. <br/>  N - No. </p>",
         // data: { taskType: "Circle Task 1", trial: i + 1 },
     };
     timeline.push(awarenessR);
@@ -723,7 +723,7 @@ for (let i = 0; i < NUMBER_OF_TRIALS_2; i++) {
 
     var awareness = {
         type: "html-keyboard-response",
-        stimulus: "<p class='image'><img src='./Feedback.jpg' /></p>",
+        stimulus: "<p class='image'><img src='/assets/Feedback.jpg' /></p>",
         choices: [37,38,39],
         prompt: "",
         data: { taskType: "Circle Task 2", trial: i + 1 },
@@ -776,8 +776,8 @@ for (let i = 0; i < NUMBER_OF_TRIALS_2; i++) {
     var awarenessR = {
         type: "html-keyboard-response",
         stimulus: "<p>In the previous trial did you match your breath to the pulsing circle?</p>",
-        choices: ["1", "2"],
-        prompt: "<p>1 Yes.   2 No. </p>",
+        choices: ["y", "n"],
+        prompt: "<p>Y - Yes. <br/>  N - No. </p>",
         // data: { taskType: "Circle Task 1", trial: i + 1 },
     };
     timeline.push(awarenessR);
@@ -1085,8 +1085,8 @@ function redo(task, checks){ // TODO add awareness and generalize, checks: 1 for
     var aware = {
         type: "html-keyboard-response",
         stimulus: "<p>In the previous trial did you match your breath to the pulsing circle?</p>",
-        choices: ["1", "2"],
-        prompt: "<p>1 Yes.   2 No. </p>",
+        choices: ["y", "n"],
+        prompt: "<p>Y - Yes. <br/>  N - No. </p>",
         // data: { taskType: "Circle Task 1", trial: i + 1 },
     };
     var repeat = {
@@ -1126,7 +1126,7 @@ function redo(task, checks){ // TODO add awareness and generalize, checks: 1 for
 }
 
 function isAware(){ //Call after awareness task
-    return JSON.parse(jsPsych.data.get().json())[2]["key_press"] == 49
+    return JSON.parse(jsPsych.data.get().json())[2]["key_press"] == 89
 }
 
 function isAccurate(pos){
