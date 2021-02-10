@@ -49,7 +49,7 @@ var unsaved2 = [];
 //Testing questionnaire
 var workerId = {
     type: 'survey-html-form',
-    preamble: '<h1>Worker Id:</h1></br>',
+    preamble: '<h1>Participant Id:</h1></br>',
     html: '<div id="workerId"><input name="workerId" id="worker" type="text" /></p>',
 };
 
@@ -377,6 +377,7 @@ var awareness4 = {
 };
 // timeline.push(awareness4);
 
+timeline.push(workerId);
 
 // welcome message for experiment 1
 var welcome1 = {
@@ -782,7 +783,6 @@ for (let i = 0; i < NUMBER_OF_TRIALS_2; i++) {
     };
     timeline.push(awarenessR);
 }
-timeline.push(workerId)
 
 var questionnaire = {
     type: 'survey-html-form',
@@ -885,7 +885,7 @@ function getAuthNum() {
 // saves the data to firebase
 function saveData() {
     let finalData = {
-        worker: extractSurveyForm('workerId'),
+        participantId: extractSurveyForm('workerId'),
         task1: extractTaskData("Circle Task 1"),
         quesiton1: extractTaskQuestion("Circle Task 1"),
         task2: extractTaskData("Circle Task 2"),
