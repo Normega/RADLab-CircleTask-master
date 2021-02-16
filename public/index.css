@@ -10,11 +10,12 @@ canvas {
 }
 
 p {
-	text-align: left;
+	text-align: center;
 	size: 0.9;
 }
 p.answer {
-	text-align-last: left;
+	text-align: center;
+	text-align-last: center;
 	letter-spacing: 0.1em;
 	word-spacing: 0.1em;
 }

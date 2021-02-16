@@ -229,7 +229,7 @@ jsPsych.plugins["circle-task-practice"] = (function () {
                 prompt.innerHTML = `BREATHE OUT`;
             }
             drawBall();
-            if (expand && radius >= canvas.height / 2) {
+            if (expand && radius >= (canvas.height / 2) - 5 ) {
                 var maxTime = performance.now() - startTime;
                 console.log(`The circle maxed out at ${maxTime}`);
                 responses.push({
