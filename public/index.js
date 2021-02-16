@@ -37,9 +37,6 @@ firebase.auth().onAuthStateChanged((user) => {
   }
 });
 
-
-
-
 // Database Functions
 
 // Logs that a user ID has been created
