@@ -46,19 +46,31 @@
 
     <script src="jspsych-6.1.0/jspsych.js"></script>
     <!-- <script src="/public/jspsych-6.1.0/jspsych.js"></script> -->
-    <script src="./questions.js"></script>
+    
+    <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+    <link href="/index.css" rel="stylesheet" type="text/css"> </link>
+    
+    <!---- Please note that the order of functions is really important 
+           config.js must come first!!!-->
+           
+    <script src="./js/config.js"></script> 
+    <script src="./js/helpers.js"></script>
+    <script src="./js/database.js"></script>
+    <script src="./js/getID.js"></script>
+    <script src="./js/questions.js"></script>
+    <script src="./js/instructions.js"></script>
+    <script src="./js/entrain.js"></script>
+    <script src="./js/circleTask2.js"></script>
+    <script src="./js/circleTaskv2.js"></script>
+    <script src="./js/breathEntraining.js"></script>
+    <script src="./js/practice1.js"></script>
+    
+
     <script src="jspsych-6.1.0/plugins/jspsych-survey-html-form.js"></script>
     <script src="jspsych-6.1.0/plugins/jspsych-instructions.js"></script>
     <script src="jspsych-6.1.0/plugins/jspsych-html-button-response.js"></script>
     <script src="jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
-    <script src="jspsych-6.1.0/plugins/circleTaskv2.js"></script>
-    <script src="jspsych-6.1.0/plugins/circleTask2.js"></script>
     
-    <script src="jspsych-6.1.0/plugins/practiceCircleTask.js"></script>
-    <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css">
-    </link>
-    <link href="/index.css" rel="stylesheet" type="text/css">
-    </link>
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
     </link>
   </head>
@@ -67,6 +79,5 @@
     
   <body></body>  
   
-  <!-- <script type="module" src="./questions.js"></script> -->
 <script type="module" src="/index.js"></script>
 </html>

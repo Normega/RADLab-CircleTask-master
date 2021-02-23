@@ -9,6 +9,10 @@ canvas {
 	border: 3px solid black;
 }
 
+img {
+	height: 25em;
+}
+
 p {
 	text-align: center;
 	size: 0.9;
@@ -24,10 +28,35 @@ p.image {
 	justify-content: center;
 }
 
-img {
-	height: 25em;
+p.description {
+	color: #000000;	
 }
 
-input {
-	margin: 0.5em;
+p.description em_black {
+	color: #000000;
+	font-weight: bolder;
+}
+
+p.description em_blue {
+	color: #0000FF;
+	font-weight: bolder;
+}
+
+p.description em_red {
+	color: #FF0000;
+	font-weight: bolder;
+}
+
+p.inputQ  {
+	text-align: left;
+	color: #000000;
+}
+
+p.input  {
+	text-align: right;
+	color: #000000;
+}
+
+td {
+	text-align: left;
 }
