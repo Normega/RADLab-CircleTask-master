@@ -58,12 +58,14 @@ on_finish: function(data){
 // Logs that a user ID has been created
 var validateID_node = {
     timeline: [userId_trial],
+    on_load: function() { trialNumber = 1; },
     loop_function: function(){                
         if(goodId){            
             console.log("Good ID: ", userId); //make sure the number matches the timeline order (from 0)
             saveSessionData("GetID");
             return false; //keep looping when ID is invalid
-        } else {            
+        } else {  
+            trialNumber +=1;          
             idText = '<p>Sorry, those IDs are invalid or do not match. Please try again: ' +
             '<input name="userId1" id="userId1" type="text" /> </p>' +
             '<p> Please enter your ID a second time to make sure we get it right: ' +

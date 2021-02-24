@@ -83,11 +83,10 @@ var circlePractice2 = {
         return generatetrials(1)[0];
     },
     on_load: function(){        
-        saveSessionData("Practice2_Begin");
+        saveSessionData("Practice2_Begin", trialNumber);
     },
     on_finish: function(){
-        saveSessionData("Practice2_Complete", this.trialNumber);
-        trialNumber +=1;
+        saveSessionData("Practice2_Complete", trialNumber);
     }
 };
 
@@ -113,8 +112,8 @@ repeatneeded = false;
 var pracTrialNumber = 0;
 var practice2_node = {
     timeline: [repeat_pract2_node, pract2_instruct, circlePractice2, detectchange],
+    on_load: function() { trialNumber = 1; },
     loop_function: function(data){
-        pracTrialNumber += 1;
         if (repeatneeded) { 
             var indexer = 2; //if we are already on a repeat, there were 3 trials in timeline
         }else{
@@ -122,6 +121,7 @@ var practice2_node = {
         }
         if(data.values()[indexer].accuracy < 80){
             repeatneeded = true;
+            trialNumber += 1;
             //console.log(data.values()[indexer].accuracy, "BOO"); //make sure the number matches the timeline order (from 0)
             return true; //keep looping when accuracy is too low
         } else {

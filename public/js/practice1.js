@@ -60,8 +60,8 @@ var repeat_pract_node = {
 var circlePractice = {
     type: "circle-taskv2",
     trialNumber: function () {
-        // function needed to return dynamic value of step
-        // otherwise 0.1 passed each time
+        // function needed to return dynamic value of trialNumber
+        console.log(trialNumber)
         return trialNumber;
     },
     stimulus:
@@ -87,7 +87,6 @@ var circlePractice = {
     },
     on_finish: function(){
         saveSessionData("Practice1_Complete",trialNumber);
-        trialNumber += 1;
     }
 };
 
@@ -95,8 +94,8 @@ repeatneeded = false;
 var pracTrialNumber = 0;
 var practice_node = {
     timeline: [repeat_pract_node, pract_instruct, circlePractice],
+    on_load: function() { trialNumber = 1; },
     loop_function: function(data){
-        pracTrialNumber += 1;
         if (repeatneeded) { 
             var indexer = 2; //if we are already on a repeat, there were 3 trials in timeline
         }else{
@@ -104,7 +103,9 @@ var practice_node = {
         }
         if(data.values()[indexer].accuracy < 80){
             repeatneeded = true;
-            //console.log(data.values()[indexer].accuracy, "BOO"); //make sure the number matches the timeline order (from 0)
+            trialNumber += 1;
+            console.log(trialNumber)
+            console.log(data.values()[indexer].accuracy, "BOO"); //make sure the number matches the timeline order (from 0)
             return true; //keep looping when accuracy is too low
         } else {
             repeatneeded = false;
