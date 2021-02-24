@@ -5,7 +5,7 @@
 
 // Experiment-wide Variables
 var maintimeline = []; // the main experiment timeline
-
+var trialNumber = -1; // keeps track of trials
 
 let TrialTypes1 = generatetrials(NUMBER_OF_TRIALS_1)
 shuffle(TrialTypes1);
@@ -16,16 +16,17 @@ shuffle(TrialTypes1);
 (firebase.auth);
 
 
-maintimeline.push(welcome_trial);
+//maintimeline.push(welcome_trial);
+//maintimeline.push(consent_trial);
 //maintimeline.push(instructions1_trial);
 
 
 var repeatneeded = false;
 
 maintimeline.push(validateID_node);
-
-maintimeline.push(entrain_node);
+//maintimeline.push(entrain_node);
 maintimeline.push(practice_node);
+//maintimeline.push(practice2_node);
 maintimeline.push(goodbye_trial)
 
 // start the experiment

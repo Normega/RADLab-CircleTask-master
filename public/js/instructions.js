@@ -4,7 +4,7 @@
 var welcome_trial = {
     type: "html-keyboard-response",
     stimulus: "<p class='image'><img style='width:502px; height:130px;' src='/assets/CombinedLogo.png' /></p>",
-    choices: ['rightarrow'],
+    choices: ['ArrowRight'], //'rightarrow' stopped working
     prompt: "<p class='description'>Welcome to the study, please press <em_black>RIGHT ARROW</em_black> to continue.</p>",    
     post_trial_gap: 500
 };
@@ -12,7 +12,7 @@ var welcome_trial = {
 // end message
 var postTrial = {
     type: "html-keyboard-response",
-    choices: ['rightarrow'],
+    choices: ['ArrowRight'],
     stimulus:
         "<p style='text-align:center;'> The experiment has concluded. Your authentation number is <b> ${x} </b>. Please make a note of it. </p>" +
         "<p style='text-align:center;'>Please press <strong>RIGHT ARROW</strong> to continue.</p>"    ,
@@ -23,7 +23,7 @@ var postTrial = {
 var goodbye_trial = {
     type: "html-keyboard-response",
     stimulus: "<p class='image'><img style='width:502px; height:130px;' src='/assets/CombinedLogo.png' /></p>",
-    choices: ['rightarrow'],
+    choices: ['ArrowRight'],
     prompt: "<p style='text-align:center;'>You have completed the Study.</p>" + 
             "<p style='text-align:center;'>Thanks for your participation.</p>" + 
             "<p style='text-align:center;'>Please press <strong>RIGHT ARROW</strong> to exit.</p>"    

@@ -5,18 +5,18 @@ var pract2_instruct = {
     type: "instructions",
     pages: [
         "<p><b>Practice 2</b></p>" +
-        "<p>Great, you are almost ready for the main task. There's one more element to add.</p>" +
-        "<p  class='description'>You will again see the  circle <em_blue>expanding</em_blue> and " + 
-        "<em_red>contracting.</em_red><br>",
-        "Please continue to <em>breath in </em> when the circle is <em_blue>expanding</em_blue>" +
-        " and breathe out when the circle is <em_red>contracting.</em_red></p>",
+        "<p>There's one more element to add!</p>" +
+        "<p class='description'>You will again see the  circle <em_blue>expanding</em_blue> and " + 
+        "<em_red>contracting.</em_red></p>",
+        "<p class='description'>Please continue to <em_blue>breath in </em_blue> when the circle is <em_blue>expanding</em_blue>" +
+        " and <em_red>breathe out</em_red> when the circle is <em_red>contracting.</em_red></p>",
         "<p><b>Keyboard Responses</b></p>" +
         "<p>Please also continue to track the circle with the keyboard arrows.</p>" +
         "<p class='description'>Press <em_blue>UP</em_blue> when the circle <em_blue>expands</em_blue>" +
         " and <em_red>DOWN</em_red> when the circle <em_red>contracts.</em_red></p>",
         "<p><b>Noticing Change</b></p>" +
-        "<p class='description'p>The new element is that we would like you to notice if your breathing" +
-        "is <em_black> speeding up, slowing down, </em_black> or <em_black> staying the same. </em_black> </p>" +
+        "<p class='description'p>The new thing we would like you to do is notice if your breathing" +
+        "<em_black> speeds up, slows down, </em_black> or <em_black> stays the same.</em_black> </p>" +
         "<p class='description'>We will ask you to choose what happened after you breathe along with the circle.</p>" +
         "<p class='description'>When you are ready, place your fingers on the <em_blue>UP</em_blue> and " +
         "<em_red>DOWN</em_red> arrow keys.</p>" +
@@ -67,7 +67,7 @@ var circlePractice2 = {
     stimulus:
         "<canvas id='myCanvas' width='800' height='500'></canvas>" +
         "<p id='prompt' style='text-align:center;font-weight:bold;'></p>",
-        choices: [38, 40], //up or down
+        choices: ['ArrowUp', 'ArrowDown'], //up or down
     post_trial_gap: 1000,
     response_ends_trial: false,
     step: function () {
@@ -86,14 +86,33 @@ var circlePractice2 = {
         saveSessionData("Practice2_Begin");
     },
     on_finish: function(){
-        saveSessionData("Practice2_Complete");
+        saveSessionData("Practice2_Complete", this.trialNumber);
+        trialNumber +=1;
     }
+};
+
+var detectchange = {
+    type: "html-keyboard-response",
+        stimulus: "<p class='image'><img src='/assets/Feedback.jpg' /></p>",
+        choices: ['ArrowLeft','ArrowRight','ArrowUp'],
+        prompt: "",
+        data: { Block: "Change Detect", trialNumber: trialNumber},
+        on_finish: function (data) {
+            trialNumber += 1;
+            if (keyToResponse[data.key_press] === 'up') {
+                console.log("correct");
+                // 70 is the numeric code for f
+                data.correct = true; // can add property correct by modify data object directly
+            } else {
+                console.log("wrong");
+            }
+        },
 };
 
 repeatneeded = false;
 var pracTrialNumber = 0;
-var practice_node = {
-    timeline: [repeat_pract2_node, pract2_instruct, circlePractice2],
+var practice2_node = {
+    timeline: [repeat_pract2_node, pract2_instruct, circlePractice2, detectchange],
     loop_function: function(data){
         pracTrialNumber += 1;
         if (repeatneeded) { 

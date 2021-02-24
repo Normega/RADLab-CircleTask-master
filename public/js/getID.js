@@ -45,11 +45,11 @@ html:  function(){
 autofocus: 'userId1',
 data: { taskType: "userID"},
 on_finish: function(data){       
-    var resp = JSON.parse(data.responses);
+    //console.log(data.response);
     
-    if(resp.userId1 && resp.userId1 == resp.userId2){
-        console.log(resp.userId1);
-        userId = resp.userId1;
+    if(data.response.userId1 && data.response.userId1 == data.response.userId2){
+        //console.log(data.response.userId1);
+        userId = data.response.userId1;
         goodId = true;
     }        
 }

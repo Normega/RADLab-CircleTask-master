@@ -16,5 +16,6 @@ let rateChange = 0.5; //starting proportional rate change across a change trial;
 let step = 0.1; // starting step size for increasing or decreasing rate change (.1 = 10% added or subtracted from current rate)
 
 let userId = "undefined";
-let eventNum = 1;
+let eventNum = 1; // keep track of every log entry, does not reset
+let trialNumber = -1; // keeps track of trials, resets within blocks
 

@@ -56,7 +56,8 @@ var entrain_check = {
         trial: entrainTrialNumber 
     },
     on_finish: function(data){
-        if(data.key_press == 89){ //code for 'y'
+        console.log(data.response);
+        if(data.response == 'y' | data.response == 'Y'){ 
             data.entrainOK = true;
             repeatEntrain = false;
         } else {

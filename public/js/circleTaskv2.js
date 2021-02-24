@@ -143,23 +143,26 @@ jsPsych.plugins["circle-taskv2"] = (function () {
 
         // response listener always listening for key presses and recording them
         var register_response = function (info) {            
-            if (info.key == 38){
+            console.log(info.key);
+            //if (info.key == 38){
+            if (jsPsych.pluginAPI.compareKeys('ArrowUp', info.key)){
                 current_response = "expand";
-            } else if (info.key == 40){
+            //} else if (info.key == 40){
+            } else if (jsPsych.pluginAPI.compareKeys('ArrowDown', info.key)){
                 current_response = "contract";
             }
             //console.log(`Current response: ${current_response} `);
             //console.log(`Key ${info.key} pressed`);                      
         };
-
+      
         // start the response listener
         if (trial.choices != jsPsych.NO_KEYS) {
             var keyboardListener = jsPsych.pluginAPI.getKeyboardResponse({
-                callback_function: register_response,
-                valid_responses: trial.choices,
-                rt_method: "performance",
-                persist: true,
-                allow_held_key: false,
+            callback_function: register_response,
+            valid_responses: trial.choices,
+            rt_method: 'performance',
+            persist: true,
+            allow_held_key: false
             });
         }
 

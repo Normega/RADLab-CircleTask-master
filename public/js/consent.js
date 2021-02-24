@@ -1,29 +1,21 @@
 //CONSENT FORM
-
-var consent_block = {
-    type: 'survey-multi-choice', 
-    preamble: consent,
-    questions: [{prompt: "<h3>Authorization</h3>", options: consent_options, required:true, name: 'consent_resp'}],
-    button_label: "Next",
-  on_finish: function(data){
-    var responses = JSON.parse(data.responses); 
-    jsPsych.data.addProperties({consent: responses.consent_resp}); 
+var check_consent = function(elem) {
+    if (document.getElementById('consent_checkbox').checked) {
+      return true;
     }
-};
-
-
-var check_consent = {
-    timeline: [consent_block],
-    conditional_function: function(){
-        var data = jsPsych.data.getLastTrialData().values()[0];
-        var responses = JSON.parse(data.responses);
-        if(responses.consent_resp=='I have read this form and decided that I will not participate in the experiment described above.'){
-            noConsent();
-            jsPsych.endExperiment();
-            return true; 
-        } else {
-        	$('html,body').scrollTop(0);
-            return false; 
-        }
+    else {
+      alert("If you wish to participate, you must check the box next to the statement 'I agree to participate in this study.'\n\n" +
+      "Otherwise, please just close the browser window to exit.");
+      return false;
     }
-}
+    return false;
+  };
+  
+  
+  // declare the block.
+  var consent_trial = {
+    type: "external-html",
+    url: "./assets/consent.html",
+    cont_btn: "start",
+    check_fn: check_consent
+  };

@@ -5,12 +5,13 @@ var pract_instruct = {
     type: "instructions",
     pages: [
         "<p><b>Practice 1</b></p>" +
-        "<p>Great, now we have a some more advanced practice.</p>" +
-        "<p  class='description'>You will again see the  circle <em_blue>expanding</em_blue> and " + 
-        "<em_red>contracting.</em_red><br>",
-        "Please continue to <em>breath in </em> when the circle is <em_blue>expanding</em_blue>" +
-        " and breathe out when the circle is <em_red>contracting.</em_red></p>",
+        "<p>We have a some more advanced practice.</p>" +
+        "<p class='description'>You will again see the circle <em_blue>expanding</em_blue> and " + 
+        "<em_red>contracting.</em_red></p>",
+        "<p class='description'>Please continue to <em_blue>breath in</em_blue> when the circle is "+
+        "<em_blue>expanding</em_blue> and <br><em_red>breathe out</em_red> when the circle is <em_red>contracting.</em_red></p>",
         "<p><b>Keyboard Responses</b></p>" +
+        "<p>Now, we would also like you to track the circle using the arrow keys.</p>" +
         "<p>Please have your hand on the arrow keys on your keyboard.</p>" +
         "<p class='description'>Press <em_blue>UP</em_blue> when the circle <em_blue>expands</em_blue>" +
         " and <em_red>DOWN</em_red> when the circle <em_red>contracts.</em_red></p>",
@@ -61,12 +62,12 @@ var circlePractice = {
     trialNumber: function () {
         // function needed to return dynamic value of step
         // otherwise 0.1 passed each time
-        return pracTrialNumber;
+        return trialNumber;
     },
     stimulus:
         "<canvas id='myCanvas' width='800' height='500'></canvas>" +
         "<p id='prompt' style='text-align:center;font-weight:bold;'></p>",
-        choices: [38, 40], //up or down
+        choices: ['ArrowUp', 'ArrowDown'], //up or down 38 40
     post_trial_gap: 1000,
     response_ends_trial: false,
     step: function () {
@@ -82,10 +83,11 @@ var circlePractice = {
         return generatetrials(1)[0];
     },
     on_load: function(){        
-        saveSessionData("Practice1_Begin");
+        saveSessionData("Practice1_Begin",trialNumber);
     },
     on_finish: function(){
-        saveSessionData("Practice1_Complete");
+        saveSessionData("Practice1_Complete",trialNumber);
+        trialNumber += 1;
     }
 };
 
@@ -111,4 +113,5 @@ var practice_node = {
         }
     }
 }
+
 

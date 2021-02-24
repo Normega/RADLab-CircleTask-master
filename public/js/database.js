@@ -1,13 +1,14 @@
 // Database Functions
 // saves the data to firebase
 
-function saveSessionData(blockname){
+function saveSessionData(blockname, trialNumber = -1){
     firebase.database().ref('sessions/' + userId + '/' + eventNum).set({
         StartTime: EXPERIMENT_START_TIME,
-        Time: now(),
+        Time: now() - EXPERIMENT_START_TIME,
         UserId: userId,
         Authentation: authnum,
-        Block: blockname  
+        Block: blockname,
+        TrialNum: trialNumber  
     });
     eventNum +=1;
 }
