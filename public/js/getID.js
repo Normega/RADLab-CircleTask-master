@@ -63,7 +63,8 @@ var validateID_node = {
         if(goodId){            
             console.log("Good ID: ", userId); //make sure the number matches the timeline order (from 0)
             saveSessionData("GetID");
-            return false; //keep looping when ID is invalid
+            trialNumber = 0;
+            return false; //exit loop
         } else {  
             trialNumber +=1;          
             idText = '<p>Sorry, those IDs are invalid or do not match. Please try again: ' +

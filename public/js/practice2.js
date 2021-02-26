@@ -26,15 +26,14 @@ var pract2_instruct = {
     post_trial_gap: 500
 };
 
-
+var errtext = "Repeat Needed";
 // instructions if the person fails the task 1 practice trials
 var repeat_pract2_instruct = {
     type: "instructions",
+    repeatneeded: function(){return repeatneeded},
+    detectACC: function(){return detectACC},    
     pages: [
-        "<p><b>Repeat Practice</b></p>" +
-        "<p>Sorry, but you did not track the circle accurately enough.</p>" +
-        "<p>You will need to repeat the practice trial to make sure that you " +
-        "understand the task instructions.</p>",        
+        function(){return errortext(lastACC, detectACC)},        
     ],
     show_clickable_nav: true,
     // key_forward: 's',
@@ -45,90 +44,53 @@ var repeat_pract2_instruct = {
 var repeat_pract2_node = {
     timeline: [repeat_pract2_instruct],
     conditional_function: function(){
-        if(repeatneeded){
-            console.log(repeatneeded, "Practice2 Repeat needed...");
+        if(repeatneeded){            
             return true;
         } else {
-            console.log(repeatneeded, "Practice2 Good to go!");
+            console.log(repeatneeded, detectACC, "Practice2 Good to go!");
             return false;
         }
     }
 }
-
-
-//Practice Trial Construction
-var circlePractice2 = {
-    type: "circle-taskv2",
-    trialNumber: function () {
-        // function needed to return dynamic value of step
-        // otherwise 0.1 passed each time
-        return pracTrialNumber;
-    },
-    stimulus:
-        "<canvas id='myCanvas' width='800' height='500'></canvas>" +
-        "<p id='prompt' style='text-align:center;font-weight:bold;'></p>",
-        choices: ['ArrowUp', 'ArrowDown'], //up or down
-    post_trial_gap: 1000,
-    response_ends_trial: false,
-    step: function () {
-        // function needed to return dynamic value of step (allows it to change from initial value)   
-        return step;
-    },
-    totalRateChange: function () {
-        // to update rate change
-        return rateChange;            
-    },
-    numberOfPulses: NUMBER_OF_PRACTICE_PULSES_1,
-    speed: function(){        
-        return generatetrials(1)[0];
-    },
-    on_load: function(){        
-        saveSessionData("Practice2_Begin", trialNumber);
-    },
-    on_finish: function(){
-        saveSessionData("Practice2_Complete", trialNumber);
-    }
-};
 
 var detectchange = {
     type: "html-keyboard-response",
         stimulus: "<p class='image'><img src='/assets/Feedback.jpg' /></p>",
         choices: ['ArrowLeft','ArrowRight','ArrowUp'],
         prompt: "",
-        data: { Block: "Change Detect", trialNumber: trialNumber},
+        data: { 
+            Block: "Change Detect", 
+            trialNumber: trialNumber
+        },
         on_finish: function (data) {
-            trialNumber += 1;
-            if (keyToResponse[data.key_press] === 'up') {
-                console.log("correct");
-                // 70 is the numeric code for f
-                data.correct = true; // can add property correct by modify data object directly
-            } else {
-                console.log("wrong");
+            correctKey = getCorrect(curSpeed);
+            detectACC = jsPsych.pluginAPI.compareKeys(data.response, correctKey);
+            console.log("Speed: ",curSpeed," Correct Key: ",correctKey, " Key Pressed: ", data.response, " ACC:", +
+                detectACC, "Tracking ACC: ", lastACC);            
+            if (!detectACC){
+                repeatneeded=true;
             }
+            data.correct = detectACC;            
+            saveSessionData(blockName + "_Detect", curSpeed, rateChange, step, lastACC, detectACC);
         },
 };
 
-repeatneeded = false;
-var pracTrialNumber = 0;
 var practice2_node = {
-    timeline: [repeat_pract2_node, pract2_instruct, circlePractice2, detectchange],
-    on_load: function() { trialNumber = 1; },
+    timeline: [pract2_instruct, circlePractice, detectchange, repeat_pract2_node],
+    on_timeline_start: function() {
+        console.log("Prep Practice 2");
+        blockName = "Practice2";        
+        lastACC = 100;      //start off as though things are great and wait to be disappointed
+        detectACC = 1;      //start off as though things are great and wait to be disappointed
+        curSpeed = generatetrials(1)[0]; //select 1 at random each time the node loads                      
+    },   
     loop_function: function(data){
-        if (repeatneeded) { 
-            var indexer = 2; //if we are already on a repeat, there were 3 trials in timeline
-        }else{
-            var indexer = 1; //if we are not already repeating, there were 2 trials in timeline
-        }
-        if(data.values()[indexer].accuracy < 80){
-            repeatneeded = true;
-            trialNumber += 1;
-            //console.log(data.values()[indexer].accuracy, "BOO"); //make sure the number matches the timeline order (from 0)
+        console.log("Track ACC: ",lastACC);
+        if(repeatneeded){            
             return true; //keep looping when accuracy is too low
         } else {
-            repeatneeded = false;
-            //console.log(data.values()[indexer].accuracy, "OK!");
+            trialNumber = 0;            
             return false; //break out of loop when accuracy is high enough
-        }
+        }        
     }
 }
-

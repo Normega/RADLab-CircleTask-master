@@ -15,18 +15,15 @@ shuffle(TrialTypes1);
 (firebase.auth);
 
 
-maintimeline.push(welcome_trial);
-maintimeline.push(consent_trial);
-maintimeline.push(instructions1_trial);
+//maintimeline.push(welcome_trial); //instructions.js
+//maintimeline.push(consent_trial); //consent.js
 
+maintimeline.push(validateID_node); //getID.js
+//maintimeline.push(entrain_node);    //entrain.js
+//maintimeline.push(practice_node);   //practice1.js
 
-var repeatneeded = false;
-
-maintimeline.push(validateID_node);
-maintimeline.push(entrain_node);
-maintimeline.push(practice_node);
-//maintimeline.push(practice2_node);
-maintimeline.push(goodbye_trial)
+maintimeline.push(practice2_node);    //practice2.js
+maintimeline.push(goodbye_trial)    //instructions.js
 
 // start the experiment
 jsPsych.init({

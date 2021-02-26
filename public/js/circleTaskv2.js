@@ -40,7 +40,7 @@ jsPsych.plugins["circle-taskv2"] = (function () {
             totalRateChange: {
                 type: jsPsych.plugins.parameterType.INT,
                 pretty_name: "Total rate change.",
-                default: 1.0,
+                default: rateChange,
                 description: "Determines the change rate of the trial.",
             },
             numberOfPulses: {
@@ -127,6 +127,7 @@ jsPsych.plugins["circle-taskv2"] = (function () {
             var trial_data = {
                 task: "Circle Task 1",
                 trialNumber: trial.trialNumber,
+                totalRateChange: trial.totalRateChange,
                 speed: trial.speed,
                 step: trial.step,
                 accuracy: computeACC(runningDeviation, totalFrames) 
@@ -186,7 +187,7 @@ jsPsych.plugins["circle-taskv2"] = (function () {
         const changeRate = change ** (1 / (trial.numberOfPulses - 1));        
 
         // setting up variables
-        const firstpulsetime = 5000; //first pulse time in ms
+        const firstpulsetime = FIRST_PULSE_TIME; //first pulse time in ms
         const startRadius = 50;       
         var radius = startRadius;
 
@@ -207,7 +208,7 @@ jsPsych.plugins["circle-taskv2"] = (function () {
         var expand = true; //start off expanding
         var currPulses = 0;      
                 
-        console.log("change: ", change);
+        console.log("Trial type: ", trial.speed, "Change Proportion: ", change);
 
         function getGradient(){
             var gradient = ctx.createRadialGradient(
@@ -260,7 +261,7 @@ jsPsych.plugins["circle-taskv2"] = (function () {
             elapsed = now - then;
             
             if (expand && elapsed >= onewayTime) {                
-                console.log(`The circle maxed out at ${elapsed}`);                
+                //console.log(`The circle maxed out at ${elapsed}`);                
                 responses.push({
                     type: "circle",
                     variable: "max",
@@ -269,7 +270,7 @@ jsPsych.plugins["circle-taskv2"] = (function () {
                 expand = false;
                 then = now - (elapsed % onewayTime); // get ready to complete the pulse animation
             } else if (!expand && elapsed >= onewayTime) {                
-                console.log(`The circle minned out at ${elapsed}`);            
+                //console.log(`The circle minned out at ${elapsed}`);            
 
                 responses.push({
                     type: "circle",

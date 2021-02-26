@@ -60,8 +60,11 @@ var repeat_pract_node = {
 var circlePractice = {
     type: "circle-taskv2",
     trialNumber: function () {
+        trialNumber +=1;
         // function needed to return dynamic value of trialNumber
-        console.log(trialNumber)
+        console.log("BlockName: ",blockName," TrialNum: ",trialNumber," Speed: ",curSpeed," trial.");
+        console.log("lastACC ",lastACC," detectACC ",detectACC," repeatneeded ",repeatneeded);
+        
         return trialNumber;
     },
     stimulus:
@@ -80,36 +83,38 @@ var circlePractice = {
     },
     numberOfPulses: NUMBER_OF_PRACTICE_PULSES_1,
     speed: function(){        
-        return generatetrials(1)[0];
+        return curSpeed;
     },
-    on_load: function(){        
-        saveSessionData("Practice1_Begin",trialNumber);
+    on_load: function(){   
+        lastACC = 0;     
+        saveSessionData(blockName + "_Begin");
     },
-    on_finish: function(){
-        saveSessionData("Practice1_Complete",trialNumber);
+    on_finish: function(data){
+        lastACC = data.accuracy;
+        if(lastACC < CRIT_TRACK_ACC){
+            repeatneeded = true;         
+        } else {
+            repeatneeded = false;            
+        }
+        saveSessionData(blockName + "_Complete", data.speed, data.totalRateChange, data.step, lastACC);
     }
 };
 
-repeatneeded = false;
-var pracTrialNumber = 0;
 var practice_node = {
-    timeline: [repeat_pract_node, pract_instruct, circlePractice],
-    on_load: function() { trialNumber = 1; },
+    timeline: [pract_instruct, circlePractice, repeat_pract_node],
+    on_timeline_start: function() {         
+        blockName = "Practice1"; 
+        repeatneeded=false; //start off as though things are great and wait to be disappointed
+        lastACC = 100; //start off as though things are great and wait to be disappointed
+        detectACC=1;  //start off as though things are great and wait to be disappointed
+        curSpeed = "nochange";
+    },
     loop_function: function(data){
-        if (repeatneeded) { 
-            var indexer = 2; //if we are already on a repeat, there were 3 trials in timeline
-        }else{
-            var indexer = 1; //if we are not already repeating, there were 2 trials in timeline
-        }
-        if(data.values()[indexer].accuracy < 80){
-            repeatneeded = true;
-            trialNumber += 1;
-            console.log(trialNumber)
-            console.log(data.values()[indexer].accuracy, "BOO"); //make sure the number matches the timeline order (from 0)
+        console.log("Track ACC: ",lastACC);
+        if(repeatneeded){            
             return true; //keep looping when accuracy is too low
         } else {
-            repeatneeded = false;
-            //console.log(data.values()[indexer].accuracy, "OK!");
+            trialNumber = 0;            
             return false; //break out of loop when accuracy is high enough
         }
     }

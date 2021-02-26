@@ -113,6 +113,7 @@ jsPsych.plugins["breath-entraining"] = (function () {
         }
 
         // setting up variables        
+        const firstpulsetime = FIRST_PULSE_TIME; //first pulse time in ms
         var radius = startRadius;
 
         var canvas = document.getElementById("myCanvas");
@@ -196,7 +197,7 @@ jsPsych.plugins["breath-entraining"] = (function () {
                     time: elapsed,
                 });
                 expand = true;
-                console.log("dr: ", dr);
+                //console.log("dr: ", dr);
                 currPulses++;
                 
                 then = now - (elapsed % onewayTime); // get ready for the next pulse animation

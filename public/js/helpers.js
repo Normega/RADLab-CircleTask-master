@@ -70,3 +70,45 @@ function getAuthNum() {
     return Math.floor(Math.random() * 90000) + 10000
 }
 
+//get correct response
+function getCorrect(trialType){
+    switch(trialType){
+        case "faster":
+            return "ArrowRight";
+        case "slower":
+            return "ArrowLeft";
+        default:
+            return "ArrowUp";
+    }
+}
+
+//get correct response
+function errortext(lastACC, detectACC){
+    var badtrack = lastACC < CRIT_TRACK_ACC;
+    if (badtrack & detectACC){
+        feedbackHTML ="<p><b>Repeat Practice</b></p>" +            
+        "<p class='description'><em_blue>Good news- you detected the change correctly!</em_blue></p>" +
+        "<p class='description'><em_red>But, you did not track the circle accurately enough.</em_red></p>" +
+        "<p>You will need to repeat the practice trial to make sure that you " +
+        "understand the task instructions.</p>";
+        console.log(badtrack, detectACC, "Practice2 Repeat needed- bad track but Good guess...");    
+    } else if (badtrack & !detectACC){
+        feedbackHTML ="<p><b>Repeat Practice</b></p>" +
+        "<p class='description'><em_red>Sorry, but you did not detect the change correctly.</em_red></p>" +
+        "<p class='description'><em_red>You also did not track the circle accurately enough.</em_red></p>" +
+        "<p>You will need to repeat the practice trial to make sure that you " +
+        "understand the task instructions.</p>";
+        console.log(badtrack, detectACC, "Practice2 Repeat needed- pitcj bad track and bad guess...");
+    } else if (!detectACC){
+        feedbackHTML ="<p><b>Repeat Practice</b></p>" +
+        "<p class='description'><em_blue>Good news- you tracked the circle accurately!</em_blue></p>" +
+        "<p class='description'><em_red>But, you did not detect the change correctly.</em_red></p>" +
+        "<p>You will need to repeat the practice trial to make sure that you " +
+        "understand the task instructions.</p>";
+        console.log(badtrack, detectACC, "Practice2 Repeat needed- Good track and bad guess...");
+    } else {
+        feedbackHTML = "this should not have happened..."
+        console.log("this should not have been triggered!")
+    }
+    return feedbackHTML
+}

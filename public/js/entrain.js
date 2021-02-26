@@ -1,6 +1,4 @@
 //ENTRAIN BREATH TO CIRCLE
-var repeatEntrain = false;
-var entrainTrialNumber = 0;
 
 // pages of instructions for entraining the breath to the circle
 var entrain_instruct = {
@@ -35,11 +33,11 @@ var repeat_entrain_instruct = {
 var repeat_entrain_node = {
     timeline: [repeat_entrain_instruct],
     conditional_function: function(){
-        if(repeatEntrain){
-            console.log(repeatEntrain, "Entrain Repeat needed...");
+        if(repeatneeded){
+            console.log(repeatneeded, "Entrain Repeat needed...");
             return true;
         } else {
-            console.log(repeatEntrain, "Entrain Good to go!");
+            console.log(repeatneeded, "Entrain Good to go!");
             return false;
         }
     }
@@ -53,16 +51,17 @@ var entrain_check = {
     prompt: "<p>Y - Yes. <br/>  N - No. </p>",
     data: { 
         taskType: "entrainCheck", 
-        trial: entrainTrialNumber 
+        trial: trialNumber 
     },
     on_finish: function(data){
+        detectACC = jsPsych.pluginAPI.compareKeys(data.response, 'y');
         console.log(data.response);
-        if(data.response == 'y' | data.response == 'Y'){ 
+        if(detectACC){ 
             data.entrainOK = true;
-            repeatEntrain = false;
+            repeatneeded = false;
         } else {
             data.entrainOK = false;
-            repeatEntrain = true;
+            repeatneeded = true;
         }
     }
 }
@@ -71,8 +70,13 @@ var entrain_check = {
 var breathEntrain = {
     type: "breath-entraining",
     trialNumber: function () {
-        return entrainTrialNumber;
-    },
+        trialNumber +=1;
+        // function needed to return dynamic value of trialNumber
+        console.log("BlockName: ",blockName," TrialNum: ",trialNumber," Speed: ",curSpeed," trial.");
+        console.log("lastACC ",lastACC," detectACC ",detectACC," repeatneeded ",repeatneeded);
+        
+        return trialNumber;
+    },    
     stimulus:
         "<canvas id='myCanvas' width='800' height='500'></canvas>" +
         "<p id='prompt' style='text-align:center;font-weight:bold;'></p>",
@@ -85,13 +89,17 @@ var breathEntrain = {
 
 var entrain_node = {
     timeline: [repeat_entrain_node, entrain_instruct, breathEntrain, entrain_check],
-    loop_function: function(data){
-        entrainTrialNumber += 1;        
-        if(repeatEntrain){
+    on_load: function() {         
+        blockName = "Entrain"; 
+        repeatneeded = false; 
+        detectACC=1;},
+    loop_function: function(data){      
+        if(repeatneeded){
             console.log("ENTRAIN REPEAT!"); //make sure the number matches the timeline order (from 0)
             return true; //keep looping when more entraining is needed
         } else {
             console.log("ENTRAIN OK!");
+            trialNumber = 0;
             return false; //break out of loop when entraining is complete
         }
     }
