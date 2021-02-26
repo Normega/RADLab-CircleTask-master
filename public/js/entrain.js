@@ -7,10 +7,17 @@ var entrain_instruct = {
         "<p><b>Breath Matching</b></p>" +
         "<p class='description'>In this study, we are going to look at how you can detect changes in your breathing.<br>" +
         "For it to work, it is important to get used to breathing along with a circle on screen.<br>" +
+        "<p>  <img src='./assets/circle.png' alt='a circle'> </p>" +        
         "You will see a circle begin to <em_blue>expand</em_blue> and " +
         "<em_red>contract.</em_red></p>",
-        "<p class='description'>It is very important to get comfortable matching your breath to the circle.<br>" +        
-        "We will ask you to match your breath to the circle for about a minute.<br>" +
+        "<p><b>Breathe with the Circle</b></p>" +
+        "<p class='description'>We would like you to practice matching your breath to the circle.</p>",
+        "<p><b>Breathe In with the Circle</b></p>" +
+        "<p>  <img src='./assets/inst3.png' alt='Breathe in with the circle'> </p>",
+        "<p><b>Breathe Out with the Circle</b></p>" +
+        "<p>  <img src='./assets/inst4.png' alt='Breathe out with the circle'> </p>",
+        "<p><b>Get Ready</b></p>" +
+        "<p class='desciption'>We will ask you to match your breath to the circle for about a minute.<br>" +
         "Please press <em_black>'RIGHT ARROW'</em_black> to begin.</p>",        
     ],
     show_clickable_nav: true,
@@ -66,26 +73,6 @@ var entrain_check = {
     }
 }
 
-//Breath Entraining Trial Construction
-var breathEntrain = {
-    type: "breath-entraining",
-    trialNumber: function () {
-        trialNumber +=1;
-        // function needed to return dynamic value of trialNumber
-        console.log("BlockName: ",blockName," TrialNum: ",trialNumber," Speed: ",curSpeed," trial.");
-        console.log("lastACC ",lastACC," detectACC ",detectACC," repeatneeded ",repeatneeded);
-        
-        return trialNumber;
-    },    
-    stimulus:
-        "<canvas id='myCanvas' width='800' height='500'></canvas>" +
-        "<p id='prompt' style='text-align:center;font-weight:bold;'></p>",
-    post_trial_gap: 1000,
-    response_ends_trial: false,
-    numberOfPulses: NUMBER_OF_ENTRAIN_PULSES,
-    on_load: function(){saveSessionData("Entrain_Begin");},
-    on_finish: function(){saveSessionData("Entrain_Complete");}
-};
 
 var entrain_node = {
     timeline: [repeat_entrain_node, entrain_instruct, breathEntrain, entrain_check],

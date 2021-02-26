@@ -8,8 +8,9 @@ var pract2_instruct = {
         "<p>There's one more element to add!</p>" +
         "<p class='description'>You will again see the  circle <em_blue>expanding</em_blue> and " + 
         "<em_red>contracting.</em_red></p>",
-        "<p class='description'>Please continue to <em_blue>breath in </em_blue> when the circle is <em_blue>expanding</em_blue>" +
-        " and <em_red>breathe out</em_red> when the circle is <em_red>contracting.</em_red></p>",
+        "<p><b>Breathe with the Circle</b></p>" +
+        "<p class='description'>Please continue to <em_blue>breath in </em_blue> as the circle <em_blue>grows</em_blue>" +
+        " and <em_red>breathe out</em_red> as the circle <em_red>contracts.</em_red></p>",        
         "<p><b>Keyboard Responses</b></p>" +
         "<p>Please also continue to track the circle with the keyboard arrows.</p>" +
         "<p class='description'>Press <em_blue>UP</em_blue> when the circle <em_blue>expands</em_blue>" +
@@ -26,7 +27,6 @@ var pract2_instruct = {
     post_trial_gap: 500
 };
 
-var errtext = "Repeat Needed";
 // instructions if the person fails the task 1 practice trials
 var repeat_pract2_instruct = {
     type: "instructions",
@@ -53,30 +53,8 @@ var repeat_pract2_node = {
     }
 }
 
-var detectchange = {
-    type: "html-keyboard-response",
-        stimulus: "<p class='image'><img src='/assets/Feedback.jpg' /></p>",
-        choices: ['ArrowLeft','ArrowRight','ArrowUp'],
-        prompt: "",
-        data: { 
-            Block: "Change Detect", 
-            trialNumber: trialNumber
-        },
-        on_finish: function (data) {
-            correctKey = getCorrect(curSpeed);
-            detectACC = jsPsych.pluginAPI.compareKeys(data.response, correctKey);
-            console.log("Speed: ",curSpeed," Correct Key: ",correctKey, " Key Pressed: ", data.response, " ACC:", +
-                detectACC, "Tracking ACC: ", lastACC);            
-            if (!detectACC){
-                repeatneeded=true;
-            }
-            data.correct = detectACC;            
-            saveSessionData(blockName + "_Detect", curSpeed, rateChange, step, lastACC, detectACC);
-        },
-};
-
 var practice2_node = {
-    timeline: [pract2_instruct, circlePractice, detectchange, repeat_pract2_node],
+    timeline: [pract2_instruct, circleTask1, detectchange, repeat_pract2_node],
     on_timeline_start: function() {
         console.log("Prep Practice 2");
         blockName = "Practice2";        

@@ -5,17 +5,13 @@ const NUMBER_OF_PRACTICE_PULSES_1 = 2;
 
 const CRIT_TRACK_ACC = 80; //the proportion of time you must be tracking the circle with keyboard to pass
 
-const NUMBER_OF_PULSES_1 = 3; // original: 8
+const NUMBER_OF_PULSES_1 = 2; // original: 8
 const NUMBER_OF_PULSES_2 = 12; // original: 12
-const NUMBER_OF_TRIALS_1 = 3; // original: 15
+const NUMBER_OF_TRIALS_1 = 10; // original: 15
 const NUMBER_OF_TRIALS_2 = 3; // original: 10
 
-const STARTING_RATE_CHANGE = 0.5;
 const FIRST_PULSE_TIME = 5000; //first pulse time in ms
 const startRadius = 50;       
-
-let rateChange = STARTING_RATE_CHANGE; //starting proportional rate change across a change trial; .5 = 50% change from the base rate
-let step = 0.1; // starting step size for increasing or decreasing rate change (.1 = 10% added or subtracted from current rate)
 
 let blockName = "undefined";
 let userId = "undefined";

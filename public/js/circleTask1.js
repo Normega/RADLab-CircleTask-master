@@ -1,8 +1,8 @@
-jsPsych.plugins["circle-taskv2"] = (function () {
+jsPsych.plugins["circle-task1"] = (function () {
     var plugin = {};
 
     plugin.info = {
-        name: "circle-taskv2",
+        name: "circle-task1",
         description: "",
         parameters: {
             stimulus: {
@@ -79,7 +79,8 @@ jsPsych.plugins["circle-taskv2"] = (function () {
 
     function computeACC(runningDeviation, totalFrames) {
         var totalACC = (totalFrames - runningDeviation) / totalFrames * 100;
-        totalACC = Math.round(totalACC * 10) / 10
+        //totalACC = Math.round(totalACC * 10) / 10;
+        totalACC = Math.round(totalACC);
         return totalACC;
     }
 
@@ -308,3 +309,5 @@ jsPsych.plugins["circle-taskv2"] = (function () {
 
     return plugin;
 })();
+
+
