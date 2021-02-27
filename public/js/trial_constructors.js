@@ -3,7 +3,22 @@ var fixation = {
     stimulus: '<div style="font-size:60px;">+</div>',
     choices: jsPsych.NO_KEYS,
     trial_duration: 1000,
-  }
+  };
+
+var confidencerating={
+    type: 'html-slider-response',
+    min: 1,
+    max: 10,
+    slider_start: 5,
+    require_movement: true,    
+    stimulus: "<p class='image'><img src='/assets/confrating.jpg' style='width:800px;height:160px;' /></p>",
+    labels: ['Not Confident', 'Very Confident'],
+    prompt: "<p><b>How confident are you in your response?</b></p>",
+    on_finish: function(data){
+        confRating= data.response;
+        saveSessionData(blockName + "_Detect", curSpeed, rateChange, step, lastACC, detectACC, confRating);
+    },
+};
 
 var detectchange = {
     type: "html-keyboard-response",
@@ -20,7 +35,7 @@ var detectchange = {
             detectACC = jsPsych.pluginAPI.compareKeys(data.response, correctKey);
             console.log("Speed: ",curSpeed," Correct Key: ",correctKey, " Key Pressed: ", data.response, " ACC:", +
                 detectACC, "Tracking ACC: ", lastACC);            
-            if (!detectACC){
+            if (!detectACC & blockName == "Practice2"){
                 repeatneeded=true;
             }
             data.correct = detectACC;            

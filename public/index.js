@@ -14,18 +14,19 @@ var maintimeline = []; // the main experiment timeline
 (firebase.auth);
 
 
-//maintimeline.push(welcome_trial); //instructions.js
-//maintimeline.push(consent_trial); //consent.js
 
-//maintimeline.push(validateID_node); //getID.js
-//maintimeline.push(entrain_node);    //entrain.js
-//maintimeline.push(practice_node);   //practice1.js
-//maintimeline.push(practice2_node);    //practice2.js
+maintimeline.push(welcome_trial); //instructions.js
+maintimeline.push(consent_trial); //consent.js
+
+maintimeline.push(validateID_node); //getID.js
+maintimeline.push(entrain_node);    //entrain.js
+maintimeline.push(practice_node);   //practice1.js
+maintimeline.push(practice2_node);    //practice2.js
     
 maintimeline.push(circle1_instruct);    //run_circletask1.js
 maintimeline.push(circle1_node);    //run_circletask1.js
 maintimeline.push(graph_trial);
-maintimeline.push(goodbye_trial);    //instructions.js
+maintimeline.push(goodbye_trial);    //instructions.js*/
 
 // start the experiment
 jsPsych.init({

@@ -65,13 +65,14 @@ let circle1Trials = generatetrials(NUMBER_OF_TRIALS_1)
 shuffle(circle1Trials);
 
 var circle1_node = {
-    timeline: [fixation, circleTask1, detectchange, repeat_circle1_node],
+    timeline: [fixation, circleTask1, detectchange, confidencerating, repeat_circle1_node],
     on_timeline_start: function() {
         console.log("Prep Circle 1");
         blockName = "Circle1";        
         lastACC = 100;      //start off as though things are great and wait to be disappointed
         detectACC = 1;      //start off as though things are great and wait to be disappointed
-        curSpeed = circle1Trials.pop(); //select 1 from the trial list
+        confRating = "";
+        curSpeed = circle1Trials.pop(); //select 1 from the trial list        
     },   
     loop_function: function(data){
         console.log("Track ACC: ",lastACC);
