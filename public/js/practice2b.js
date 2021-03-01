@@ -1,26 +1,30 @@
 //PRACTICE TASK 2
 
 // pages of instructions for task 1 practice trials
-var pract2_instruct = {
+var pract2b_instruct = {
     type: "instructions",
     pages: [
-        "<p><b>Practice 2 (Task A)</b></p>" +
+        "<p><b>Practice 2 (Task B)</b></p>" +
         "<p>Let's practice before the main task.</p>" + instruct_viewpulse,
-        "<p><b>Breathe with the Circle</b></p>" + instruct_breathealong,        
-        "<p><b>Keyboard Responses</b></p>" +
+        "<p><b>Breathe with the Circle</b></p>" + instruct_breathealong,
+        
+        "<p><b>Keyboard Responses</b></p>" +        
         instruct_keypressalongPic + instruct_keypressalong,
         "<p><b>Noticing Change</b></p>" +
-        "<p class='description'p>The new thing we would like you to do is notice if your breathing" +
-        "<em_black> speeds up, slows down, </em_black> or <em_black> stays the same.</em_black> </p>" +
-        "<p class='description'>We will ask you to report what happened after you breathe along with the circle.</p>", 
-        instruct_getready,        
+        "<p class='description'p>While you are breathing along with the circle" +
+        "<em_black>you may notice </em_black> that the your breathing is" +
+        "<em_black> speeding up or slowing down.</em_black></p>"+
+        instruct_whennotice,
+        instruct_getready +
+        "<br><p>Remember to press the <em_black>RIGHT ARROW KEY</em_black> if you detect a change!</p>",        
+        
     ],
     show_clickable_nav: true,
     post_trial_gap: 500
 };
 
 // instructions if the person fails the task 1 practice trials
-var repeat_pract2_instruct = {
+var repeat_pract2b_instruct = {
     type: "instructions",
     repeatneeded: function(){return repeatneeded},
     detectACC: function(){return detectACC},    
@@ -28,30 +32,28 @@ var repeat_pract2_instruct = {
         function(){return errortext(lastACC, detectACC)},        
     ],
     show_clickable_nav: true,
-    // key_forward: 's',
     post_trial_gap: 500
 };
 
 //PRACTICE NODE
-var repeat_pract2_node = {
-    timeline: [repeat_pract2_instruct],
+var repeat_pract2b_node = {
+    timeline: [repeat_pract2b_instruct],
     conditional_function: function(){
         if(repeatneeded){            
             return true;
         } else {
-            console.log(repeatneeded, detectACC, "Practice2 Good to go!");
+            console.log(repeatneeded, detectACC, "Practice2b Good to go!");
             return false;
         }
     }
 }
 
-var practice2_node = {
-    timeline: [pract2_instruct, fixation, circleTask1, detectchange, repeat_pract2_node],
+var practice2b_node = {
+    timeline: [pract2b_instruct, circleTask2, detectchange, repeat_pract2b_node],
     on_timeline_start: function() {
-        console.log("Prep Practice 2");
-        blockName = "Practice2";        
-        lastACC = 100;      //start off as though things are great and wait to be disappointed
-        detectACC = 1;      //start off as though things are great and wait to be disappointed
+        console.log("Prep Practice 2b");
+        blockName = "Practice2b";        
+        resetLogVars();
         curSpeed = generatetrials(1)[0]; //select 1 at random each time the node loads                      
     },   
     loop_function: function(data){

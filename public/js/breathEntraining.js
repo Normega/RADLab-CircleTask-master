@@ -53,7 +53,7 @@ jsPsych.plugins["breath-entraining"] = (function () {
     };
     
     plugin.trial = function (display_element, trial) {               
-        console.log("Starting a ",trial.speed," trial...");
+        //console.log("Starting a ",trial.speed," trial...");
 
         var new_html =
             '<div id="jspsych-html-keyboard-response-stimulus">' +
@@ -180,7 +180,7 @@ jsPsych.plugins["breath-entraining"] = (function () {
             elapsed = now - then;
             
             if (expand && elapsed >= onewayTime) {                
-                console.log(`The circle maxed out at ${elapsed}`);                
+                //console.log(`The circle maxed out at ${elapsed}`);                
                 responses.push({
                     type: "circle",
                     variable: "max",
@@ -189,7 +189,7 @@ jsPsych.plugins["breath-entraining"] = (function () {
                 expand = false;
                 then = now - (elapsed % onewayTime); // get ready to complete the pulse animation
             } else if (!expand && elapsed >= onewayTime) {                
-                console.log(`The circle minned out at ${elapsed}`);            
+                //console.log(`The circle minned out at ${elapsed}`);            
 
                 responses.push({
                     type: "circle",

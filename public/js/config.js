@@ -21,8 +21,12 @@ let trialNumber = 0; // keeps track of trials, resets within blocks
 
 let lastACC = 1; //keeps track of the last trial's acc so you can see whether a repeat is needed
 let detectACC = 100; //keeps track of the current detection Accuracy
-let confRating = -1 // confidence ratings
+let confRating = -1; // confidence ratings
+
+let detectedChange = 0; // for task version B, did they exit the trial early?
 
 //TRIAL CONTROL
-let curSpeed = "undefined" //keeps track of the current trial speed
+let curSpeed = "undefined"; //keeps track of the current trial speed
 let repeatneeded = false; //start by assuming that people are doing the tasks correctly
+
+let scaleWidth = 400; //how wide likert scales should be (in pixels)

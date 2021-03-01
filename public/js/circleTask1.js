@@ -15,7 +15,7 @@ jsPsych.plugins["circle-task1"] = (function () {
                 type: jsPsych.plugins.parameterType.KEYCODE,
                 array: true,
                 pretty_name: "Choices",
-                default: [38,40], // up and down
+                default: ['arrowup','arrowdown'], // up and down
                 description: "The keys the subject is allowed to press to respond to the stimulus.",
             },
             prompt: {

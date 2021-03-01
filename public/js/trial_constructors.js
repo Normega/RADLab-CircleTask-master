@@ -1,22 +1,23 @@
 var fixation = {
     type: 'html-keyboard-response',
-    stimulus: '<div style="font-size:60px;">+</div>',
+    stimulus: '<div style="font-size:60px;">+</div>'+
+             "<p>Get Ready</p>",
     choices: jsPsych.NO_KEYS,
-    trial_duration: 1000,
+    trial_duration: 2500,
   };
 
 var confidencerating={
     type: 'html-slider-response',
     min: 1,
-    max: 10,
-    slider_start: 5,
+    max: 99,
+    slider_start: 50,
     require_movement: true,    
     stimulus: "<p class='image'><img src='/assets/confrating.jpg' style='width:800px;height:160px;' /></p>",
     labels: ['Not Confident', 'Very Confident'],
     prompt: "<p><b>How confident are you in your response?</b></p>",
     on_finish: function(data){
         confRating= data.response;
-        saveSessionData(blockName + "_Detect", curSpeed, rateChange, step, lastACC, detectACC, confRating);
+        saveSessionData(blockName + "_Confidence", curSpeed, rateChange, step, lastACC, detectACC, detectedChange, confRating);
     },
 };
 
@@ -33,13 +34,13 @@ var detectchange = {
         on_finish: function (data) {
             correctKey = getCorrect(curSpeed);
             detectACC = jsPsych.pluginAPI.compareKeys(data.response, correctKey);
-            console.log("Speed: ",curSpeed," Correct Key: ",correctKey, " Key Pressed: ", data.response, " ACC:", +
-                detectACC, "Tracking ACC: ", lastACC);            
+            //console.log("Speed: ",curSpeed," Correct Key: ",correctKey, " Key Pressed: ", data.response, " ACC:", +
+            //    detectACC, "Tracking ACC: ", lastACC);            
             if (!detectACC & blockName == "Practice2"){
                 repeatneeded=true;
             }
             data.correct = detectACC;            
-            saveSessionData(blockName + "_Detect", curSpeed, rateChange, step, lastACC, detectACC);
+            saveSessionData(blockName + "_Detect", curSpeed, rateChange, step, lastACC, detectACC, detectedChange);
         },        
 };
 
@@ -49,8 +50,8 @@ var breathEntrain = {
     trialNumber: function () {
         trialNumber +=1;
         // function needed to return dynamic value of trialNumber
-        console.log("BlockName: ",blockName," TrialNum: ",trialNumber," Speed: ",curSpeed," trial.");
-        console.log("lastACC ",lastACC," detectACC ",detectACC," repeatneeded ",repeatneeded);
+        //console.log("BlockName: ",blockName," TrialNum: ",trialNumber," Speed: ",curSpeed," trial.");
+        //console.log("lastACC ",lastACC," detectACC ",detectACC," repeatneeded ",repeatneeded);
         
         return trialNumber;
     },    
@@ -71,8 +72,8 @@ var circleTask1 = {
     trialNumber: function () {
         trialNumber +=1;
         // function needed to return dynamic value of trialNumber
-        console.log("BlockName: ",blockName," TrialNum: ",trialNumber," Speed: ",curSpeed," trial.");
-        console.log("lastACC ",lastACC," detectACC ",detectACC," repeatneeded ",repeatneeded);
+        //console.log("BlockName: ",blockName," TrialNum: ",trialNumber," Speed: ",curSpeed," trial.");
+        //console.log("lastACC ",lastACC," detectACC ",detectACC," repeatneeded ",repeatneeded);
         
         return trialNumber;
     },
@@ -106,5 +107,54 @@ var circleTask1 = {
             repeatneeded = false;            
         }
         saveSessionData(blockName + "_Complete", data.speed, data.totalRateChange, data.step, lastACC);
+    }
+};
+
+
+//Circle Task 2 Trial Construction
+var circleTask2 = {
+    type: "circle-task2",
+    trialNumber: function () {
+        trialNumber +=1;
+        // function needed to return dynamic value of trialNumber
+        //console.log("BlockName: ",blockName," TrialNum: ",trialNumber," Speed: ",curSpeed," trial.");
+        //console.log("lastACC ",lastACC," detectACC ",detectACC," repeatneeded ",repeatneeded);
+        
+        return trialNumber;
+    },
+    stimulus:
+        "<canvas id='myCanvas' width='800' height='500'></canvas>" +
+        "<p id='prompt' style='text-align:center;font-weight:bold;'></p>",
+        choices: ['ArrowUp', 'ArrowDown', 'ArrowRight'], 
+    post_trial_gap: 500,
+    response_ends_trial: false,
+    step: function () {
+        // function needed to return dynamic value of step (allows it to change from initial value)   
+        return step;
+    },
+    totalRateChange: function () {
+        // to update rate change
+        return rateChange;            
+    },
+    numberOfPulses: NUMBER_OF_PRACTICE_PULSES_1,
+    speed: function(){        
+        return curSpeed;
+    },
+    detectedChange: function(){
+        return detectedChange;
+    },
+    on_load: function(){   
+        lastACC = 0;     
+        saveSessionData(blockName + "_Begin");
+    },
+    on_finish: function(data){
+        lastACC = data.accuracy;
+        if(lastACC < CRIT_TRACK_ACC){
+            repeatneeded = true;         
+        } else {
+            repeatneeded = false;            
+        }
+        saveSessionData(blockName + "_Complete", data.speed, data.totalRateChange, data.step, 
+                        lastACC, "", detectedChange);
     }
 };

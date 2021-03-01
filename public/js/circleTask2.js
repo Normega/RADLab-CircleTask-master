@@ -1,8 +1,8 @@
-jsPsych.plugins["circle-task-two"] = (function () {
+jsPsych.plugins["circle-task2"] = (function () {
     var plugin = {};
 
     plugin.info = {
-        name: "circle-task-two",
+        name: "circle-task2",
         description: "",
         parameters: {
             stimulus: {
@@ -15,16 +15,14 @@ jsPsych.plugins["circle-task-two"] = (function () {
                 type: jsPsych.plugins.parameterType.KEYCODE,
                 array: true,
                 pretty_name: "Choices",
-                default: jsPsych.ALL_KEYS,
-                description:
-                    "The keys the subject is allowed to press to respond to the stimulus.",
+                default: ['arrowup','arrowdown','arrowright'], // up and down and right
+                description: "The keys the subject is allowed to press to respond to the stimulus.",
             },
             prompt: {
                 type: jsPsych.plugins.parameterType.STRING,
                 pretty_name: "Prompt",
                 default: null,
-                description:
-                    "Any content here will be displayed below the stimulus.",
+                description: "Any content here will be displayed below the stimulus.",
             },
             stimulus_duration: {
                 type: jsPsych.plugins.parameterType.INT,
@@ -39,10 +37,10 @@ jsPsych.plugins["circle-task-two"] = (function () {
                 description:
                     "If true, trial will end when subject makes a response.",
             },
-            difficultyChange: {
+            totalRateChange: {
                 type: jsPsych.plugins.parameterType.INT,
-                pretty_name: "Current difficulty.",
-                default: 1.0,
+                pretty_name: "Total rate change.",
+                default: rateChange,
                 description: "Determines the change rate of the trial.",
             },
             numberOfPulses: {
@@ -64,6 +62,12 @@ jsPsych.plugins["circle-task-two"] = (function () {
                 default: 1,
                 description: "The current trial number of the circle task.",
             },
+            step: {
+                type: jsPsych.plugins.parameterType.FLOAT,
+                pretty_name: "Step",
+                default: 1,
+                description: "Current step in the staircase method.",
+            },
             accuracy: {
                 type: jsPsych.plugins.parameterType.FLOAT,
                 pretty_name: "Accuracy",
@@ -73,12 +77,17 @@ jsPsych.plugins["circle-task-two"] = (function () {
         },
     };
 
-    plugin.trial = function (display_element, trial) {
+    function computeACC(runningDeviation, totalFrames) {
+        var totalACC = (totalFrames - runningDeviation) / totalFrames * 100;
+        //totalACC = Math.round(totalACC * 10) / 10;
+        totalACC = Math.round(totalACC);
+        return totalACC;
+    }
 
-        var total = 0;
-        var correct = 0;
+    plugin.trial = function (display_element, trial) {               
+        console.log("Starting a ",trial.speed," trial...");
+        var totalFrames = 0; // keeping track of animation frames 
 
-        const startTime = performance.now();
         var new_html =
             '<div id="jspsych-html-keyboard-response-stimulus">' +
             trial.stimulus +
@@ -94,12 +103,15 @@ jsPsych.plugins["circle-task-two"] = (function () {
 
         // for storing responses
         var responses = [];
-
-        // function to end trial when it is time
-        var end_trial = function () {
+        let current_response = "none"; //no response logged to begin
+        var runningDeviation = 0;
+          
+        // function to end trial when it is time      
+        var end_trial = function(animationId) {
             // kill animation
             try {
-                clearInterval(animationId);
+                //clearInterval(animationId);
+                cancelAnimationFrame(animationId);
             } catch (err) {
                 console.log(err);
             }
@@ -116,48 +128,44 @@ jsPsych.plugins["circle-task-two"] = (function () {
             var trial_data = {
                 task: "Circle Task 2",
                 trialNumber: trial.trialNumber,
+                totalRateChange: trial.totalRateChange,
                 speed: trial.speed,
-                accuracy: total/trial.numberOfPulses/2, // Previous for real accuracy: correct/total,
-                responses: responses,
+                step: trial.step,
+                accuracy: computeACC(runningDeviation, totalFrames),
+                detectedChange: cumulativeChange
+                //responses: responses,
                 // stimulus: trial.stimulus,
             };
 
             // clear the display
             display_element.innerHTML = "";
 
-            // move on to the next trial
+            // move on to the next trial and store trial data
             jsPsych.finishTrial(trial_data);
         };
 
         // response listener always listening for key presses and recording them
-        var record_data = function (info) {
-            var keyPressTime = performance.now() - startTime;
-            total += 1;
-            if (expand && info.key == 74){
-                correct += 1;
-            } else if (!expand && info.key == 70){
-                correct += 1;
-            }
-            console.log(`Key ${info.key} pressed at ${keyPressTime} and correct${correct} total${total}`);
-            
-            responses.push({
-                type: "key",
-                variable: info.key,
-                time: keyPressTime,
-            });
-            if (info.key == 32) {
-                end_trial();
-            }
+        var register_response = function (info) {            
+            console.log(info.key);
+            //if (info.key == 38){
+            if (jsPsych.pluginAPI.compareKeys('ArrowUp', info.key)){
+                current_response = "expand";
+            //} else if (info.key == 40){
+            } else if (jsPsych.pluginAPI.compareKeys('ArrowDown', info.key)){
+                current_response = "contract";
+            } else if (jsPsych.pluginAPI.compareKeys('ArrowRight', info.key)){
+                current_response = "changedetected";                                
+            };            
         };
-
+      
         // start the response listener
         if (trial.choices != jsPsych.NO_KEYS) {
             var keyboardListener = jsPsych.pluginAPI.getKeyboardResponse({
-                callback_function: record_data,
-                valid_responses: trial.choices,
-                rt_method: "performance",
-                persist: true,
-                allow_held_key: false,
+            callback_function: register_response,
+            valid_responses: trial.choices,
+            rt_method: 'performance',
+            persist: true,
+            allow_held_key: false
             });
         }
 
@@ -171,104 +179,143 @@ jsPsych.plugins["circle-task-two"] = (function () {
         }
 
         let change;
-        if (trial.speed === "up") {
-            change = 1 + trial.difficultyChange;
-        } else if (trial.speed === "down") {
-            change = 1 - trial.difficultyChange;
+        if (trial.speed === "faster") {
+            change = 1 + trial.totalRateChange;
+        } else if (trial.speed === "slower") {
+            change = 1 - trial.totalRateChange;
         } else {
             change = 1;
         }
-        // const changeRate = change ** (1 / trial.numberOfPulses);
-        // const changeRate = change / trial.numberOfPulses;
-        let calcTime = function (wantedTime) {
-            return (400 * 10) / wantedTime;
-        };
-        const baseTime = 5000; // ms
-        const finalTime = 5000 * change;
-        const changeTime = Math.abs(baseTime - finalTime);
-        const changePerPulse = changeTime / (trial.numberOfPulses - 1);
-        let currWantedTime = baseTime; // next time it'll be (old value + changePerPulse)
-        let dr = calcTime(currWantedTime);
-        console.log(
-            `finalTime:${finalTime}, changeTime:${changeTime}, changePerPulse:${changePerPulse}`
-        );
+        const changeRate = change ** (1 / (trial.numberOfPulses - 1));        
+        var cumulativeChange = changeRate;
+
+        // setting up variables
+        const firstpulsetime = FIRST_PULSE_TIME; //first pulse time in ms
+        const startRadius = 50;       
+        var radius = startRadius;
 
         var canvas = document.getElementById("myCanvas");
         var ctx = canvas.getContext("2d");
-        var x = canvas.width / 2;
-        var y = canvas.height / 2;
-        var startRadius = 50;
-        var radius = startRadius;
-        // var dr = 0.8;
-        var expand = true;
-        var currPulses = 0;
-        console.log(currWantedTime);
-        console.log("dr: ", dr);
+        const x = (canvas.width / 2);
+        const y = (canvas.height / 2);                       
+        const rLimit = Math.min(x,y);         // the biggest the radius can get
+        const rSpan = rLimit - startRadius;   // the total change in radius (largest - smallest)        
 
-        // console.log('change: ', change);
+        // the change in radius per animation frame
+        var onewayTime = firstpulsetime / 2;        
+        var expectedframes = onewayTime / 17; //17 hz framerate as our assumption        
+        var dr = rSpan / expectedframes * .8;
+        //var dr = 1; //could get way more complicated but this seems to work fine
+        
+        var doneTrial = false; //to prevent one extra animation frame from getting called while the end_trial is running
+        var expand = true; //start off expanding
+        var currPulses = 0;      
+                
+        console.log("Trial type: ", trial.speed, "Change Proportion: ", change);
 
-        var gradient = ctx.createLinearGradient(
-            x - radius,
-            y - radius,
-            x + radius,
-            y + radius
-        );
-        gradient.addColorStop("0.5", "#E80000");
+        function getGradient(){
+            var gradient = ctx.createRadialGradient(
+                x, y, 0,
+                x, y, radius
+            );
+            //gradient.addColorStop(0, "white");
+            //gradient.addColorStop("0.5", "#E80000");        
+            gradient.addColorStop(0, "#00A2FF");
+            gradient.addColorStop(0.9, "#0080C9");
+            gradient.addColorStop(1, "#005586");
+            return gradient
+        }
 
         function drawBall() {
             ctx.beginPath();
             ctx.arc(x, y, radius, 0, Math.PI * 2);
 
             // Fill with gradient
-            ctx.fillStyle = gradient;
+            ctx.fillStyle = getGradient();
             ctx.lineWidth = 16;
             ctx.fill();
-            ctx.closePath();
-        }
+            ctx.closePath();        
+        }        
 
-        function draw() {
+        function pulse(){
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             var prompt = document.getElementById("prompt");
+
+            totalFrames += 1;
+
             if (expand) {
                 radius += dr;
-                prompt.innerHTML = `BREATHE IN  + PRESS “J”`;
-
+                prompt.innerHTML = `BREATHE IN  + PRESS UP ARROW <br> ACCURACY: ${computeACC(runningDeviation, totalFrames)}`;                
+                if (current_response != "expand"){
+                    runningDeviation += 1;
+                }
             } else {
                 radius -= dr;
-                prompt.innerHTML = `BREATHE OUT  + PRESS “F”`;
+                prompt.innerHTML = `BREATHE OUT  + PRESS DOWN ARROW  <br> ACCURACY: ${computeACC(runningDeviation, totalFrames)}`;
+                if (current_response != "contract"){
+                    runningDeviation += 1;
+                }
             }
-            drawBall();
-            if (expand && radius >= canvas.height / 2) {
-                var maxTime = performance.now() - startTime;
-                console.log(`The circle maxed out at ${maxTime}`);
+
+
+            drawBall();           
+            
+            now = performance.now();
+            elapsed = now - then;
+            
+            if (current_response == "changedetected"){
+                console.log("Detect Registered!");                
+                detectedChange = cumulativeChange;
+                doneTrial = true;
+                end_trial(animationId);
+            } else if (expand && elapsed >= onewayTime) {                
+                //console.log(`The circle maxed out at ${elapsed}`);                
                 responses.push({
                     type: "circle",
                     variable: "max",
-                    time: maxTime,
+                    time: elapsed,
                 });
                 expand = false;
-            } else if (!expand && radius <= startRadius) {
-                var minTime = performance.now() - startTime;
-                console.log(`The circle minned out at ${minTime}`);
-                currWantedTime = currWantedTime + changePerPulse;
-                dr = calcTime(currWantedTime);
+                then = now - (elapsed % onewayTime); // get ready to complete the pulse animation
+            } else if (!expand && elapsed >= onewayTime) {                
+                //console.log(`The circle minned out at ${elapsed}`);            
+
                 responses.push({
                     type: "circle",
                     variable: "min",
-                    time: minTime,
+                    time: elapsed,
                 });
                 expand = true;
-                console.log(currWantedTime);
                 console.log("dr: ", dr);
                 currPulses++;
+                
+                then = now - (elapsed % onewayTime); // get ready for the next pulse animation
+
+                //APPLY THE CHANGE IN TIMING FOR THE NEXT PULSE
+                onewayTime /= changeRate;
+                dr *= changeRate;
+                cumulativeChange *= changeRate;
+
                 if (currPulses == trial.numberOfPulses) {
-                    end_trial();
-                }
+                    doneTrial = true;
+                    end_trial(animationId);                
+                };
+            }           
+         
+            if(!doneTrial){
+                requestAnimationFrame(pulse);
             }
         }
 
-        var animationId = setInterval(draw, 10);
+        var now, elapsed;
+        var then = performance.now();
+        var animationId = requestAnimationFrame(pulse);
+        //draw();
+        //var animationId = setInterval(draw, framerate);
+        
     };
 
     return plugin;
 })();
+
+

@@ -1,4 +1,4 @@
-//PRACTICE TASK 2
+//CIRCLE TASK 1
 
 // pages of instructions for task 1 practice trials
 var circle1_instruct = {
@@ -6,26 +6,23 @@ var circle1_instruct = {
     type: "instructions",
     pages: [
         "<p><b>Breath Task (A)</b></p>" +
-        "<p>Practice is now complete. We are ready for the main task.</p>" +
+        "<p>We are ready for the main task.</p>" +
         "<p class='description'>The main task will be just like what you just practiced.<br>" +
-         "you will again see the circle <em_blue>expanding</em_blue> and " + 
-        "<em_red>contracting.</em_red></p>",
+        instruct_viewpulse,
+        
         "<p><b>Breathe with the Circle</b></p>" +
-        "<p class='description'>Please continue to <em_blue>breath in </em_blue> as the circle <em_blue>grows</em_blue>" +
-        " and <em_red>breathe out</em_red> as the circle <em_red>contracts.</em_red></p>",
+        instruct_breathealong,        
+        
         "<p><b>Keyboard Responses</b></p>" +
         "<p>Please also continue to track the circle with the keyboard arrows.</p>" +
-        "<p class='description'>Press <em_blue>UP</em_blue> when the circle <em_blue>expands</em_blue>" +
-        " and <em_red>DOWN</em_red> when the circle <em_red>contracts.</em_red></p>",
+        instruct_keypressalong,        
+        
         "<p><b>Noticing Change</b></p>" +
         "<p class='description'p>After you breathe along with the circle for up to a minute " +
         "we will ask if your breathing" +
         "<em_black> sped up, slowed down, </em_black> or <em_black> stayed the same.</em_black> </p>"+
         "<p>We will also ask you to rate how confident you are in your decision.</p>",
-        "<p><b>Get Ready</b></p>"+
-        "<p class='description'>When you are ready, place your fingers on the <em_blue>UP ARROW</em_blue> and " +
-        "<em_red>DOWN ARROW</em_red> arrow keys.</p>" +
-        "<p class='description'>Please press <em_black>'RIGHT ARROW'</em_black> to begin!</p>",        
+        instruct_getready,        
     ],
     show_clickable_nav: true,
     post_trial_gap: 500
@@ -35,13 +32,10 @@ var circle1_instruct = {
 var repeat_circle1_instruct = {
     type: "instructions",    
     pages: [
-        "<p>We noticed that you are not tracking the circle very well.</p>" +
-        "<p>We can only use your data if you show that you are paying attention.</p>" +
-        "<p>Please try to stay focused and press the keys along with your breaths.</p>" +
-        "<p class='description'>Remember: <em_blue>breath in </em_blue> as the circle <em_blue>grows</em_blue>" +
-        " and <em_red>breathe out</em_red> as the circle <em_red>contracts.</em_red></p>" +
-        "<p class='description'>Press <em_blue>UP ARROW</em_blue> when the circle <em_blue>expands</em_blue>" +
-        " and <em_red>DOWN ARROW</em_red> when the circle <em_red>contracts.</em_red></p>",  
+        "<p>We noticed that you were having trouble tracking the circle.</p>" +
+        "<p>We can only use your data if it is clear you are paying attention.</p>" +        
+        instruct_breathealong + instruct_keypressalong,
+        
     ],
     show_clickable_nav: true,
     // key_forward: 's',
@@ -68,10 +62,9 @@ var circle1_node = {
     timeline: [fixation, circleTask1, detectchange, confidencerating, repeat_circle1_node],
     on_timeline_start: function() {
         console.log("Prep Circle 1");
-        blockName = "Circle1";        
-        lastACC = 100;      //start off as though things are great and wait to be disappointed
-        detectACC = 1;      //start off as though things are great and wait to be disappointed
-        confRating = "";
+        blockName = "Circle1";
+        resetLogVars();        
+        
         curSpeed = circle1Trials.pop(); //select 1 from the trial list        
     },   
     loop_function: function(data){

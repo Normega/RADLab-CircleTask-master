@@ -5,23 +5,19 @@ var pract_instruct = {
     type: "instructions",
     pages: [
         "<p><b>Practice 1</b></p>" +
-        "<p>We have a some more advanced practice.</p>" +
-        "<p class='description'>You will again see the circle <em_blue>expanding</em_blue> and " + 
-        "<em_red>contracting.</em_red></p>",
-        "<p><b>Breathe with the Circle</b></p>" +
-        "<p class='description'>Please continue to <em_blue>breath in </em_blue> as the circle <em_blue>grows</em_blue>" +
-        " and <em_red>breathe out</em_red> as the circle <em_red>contracts.</em_red></p>",        
+        "<p>We have some practice before the main task.</p>" + instruct_viewpulse,
+        
+        "<p><b>Breathe with the Circle</b></p>" + instruct_breathealong,        
+        
         "<p><b>Keyboard Responses</b></p>" +
-        "<p>Now, we would also like you to track the circle using the arrow keys.</p>" +
-        "<p>Please have your hand on the arrow keys on your keyboard.</p>" +
-        "<p class='description'>Press <em_blue>UP</em_blue> when the circle <em_blue>expands</em_blue>" +
-        " and <em_red>DOWN</em_red> when the circle <em_red>contracts.</em_red></p>",
+        "<p>We would also like you to track the circle using the arrow keys.</p>" +
+        instruct_keypressalongPic + 
+        "<p>Please have your hand on the arrow keys on your keyboard.</p>" + instruct_keypressalong,
+        
         "<p><b>How to Pass the Practice Trials</b></p>" +
         "<p>It is important to demonstrate that you can track the circle.</p>" +
-        "<p>If you do not press the keys accurately enough, we will ask you to try again.</p>" +
-        "<p class='description'>When you are ready, place your fingers on the <em_blue>UP</em_blue> and " +
-        "<em_red>DOWN</em_red> arrow keys.</p>" +
-        "<p class='description'>Please press <em_black>'RIGHT ARROW'</em_black> to begin!</p>",        
+        "<p>If you do not press the keys accurately enough, we will ask you to try again.</p>",        
+        instruct_getready,        
     ],
     show_clickable_nav: true,
     post_trial_gap: 500
@@ -32,13 +28,12 @@ var repeat_pract_instruct = {
     type: "instructions",
     pages: [
         "<p><b>Repeat Practice</b></p>" +
-        "<p>Sorry, you did not track the circle accurately enough.</p>" +
-        "<p>You must press the keys <b>immediately</b> each time the circle changes direction.</p>" +
-        "<p>You will need to repeat the practice trial to make sure that you " +
+        "<p>Sorry, you did not track the circle accurately enough.</p><br>" +
+        instruct_keypressalong +
+        "<br><p>You will need to repeat the practice trial to make sure that you " +
         "understand the task instructions.</p>",        
     ],
     show_clickable_nav: true,
-    // key_forward: 's',
     post_trial_gap: 500
 };
 
@@ -57,7 +52,7 @@ var repeat_pract_node = {
 }
 
 var practice_node = {
-    timeline: [pract_instruct, circleTask1, repeat_pract_node],
+    timeline: [pract_instruct, fixation, circleTask1, repeat_pract_node],
     on_timeline_start: function() {         
         blockName = "Practice1"; 
         repeatneeded=false; //start off as though things are great and wait to be disappointed

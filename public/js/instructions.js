@@ -20,6 +20,17 @@ var postTrial = {
     authentation: authnum
 };
 
+var newtask_trial = {
+    type: "html-keyboard-response",
+    stimulus: "<p><strong>!!!</strong></p>",
+    choices: ['ArrowRight'],
+    prompt: "<p style='text-align:center;'>We are now going to ask you to do a similar breathing task.</p>" + 
+            "<p style='text-align:center;'>However, the task instructions are slightly different. Please <strong>" +
+            "READ CAREFULLY</strong> so you can understand how the second task differs from the first.</p>" + 
+            "<p style='text-align:center;'>Please press <strong>RIGHT ARROW</strong> to continue.</p>"    
+};
+
+
 var goodbye_trial = {
     type: "html-keyboard-response",
     stimulus: "<p class='image'><img style='width:502px; height:130px;' src='/assets/CombinedLogo.png' /></p>",
@@ -29,38 +40,23 @@ var goodbye_trial = {
             "<p style='text-align:center;'>Please press <strong>RIGHT ARROW</strong> to exit.</p>"    
 };
 
+instruct_viewpulse = "<p class='description'>You will see the circle <em_blue>GROWING</em_blue> and " + 
+"<em_red>SHRINKING.</em_red></p>";
 
+instruct_breathealong = "<p class='description'><em_blue>BREATHE IN</em_blue> when the circle <em_blue>GROWS</em_blue>" +
+" and <em_red>BREATHE OUT</em_red> when the circle <em_red>SHRINKS.</em_red></p>";
 
-// pages of instructions for experiment 1
-var instructions1_trial = {
-    type: "instructions",
-    pages: [
-        "<p><b>Instruction 1:</b></p>" +
-        "<p>In this experiment, a circle will appear at the center " +
-        "of your screen.</p><p> The circle will be expanding and contracting.</p>",
-        "<p><b>Instruction 2:</b></p>" +
-        "<p>From the moment the experiment begins and until it has concluded," +
-        " have your fingers placed on the UP and DOWN arrow keys of your keyboard.</p>",
-        "<p><b>Instruction 3:</b></p>" +
-        "<p>When the circle begins to <strong>expand</strong>, " +
-        "press the <strong>UP ARROW</strong> key on your keyboard.</p>" +
-        "<p>When the circle begins to <strong>contract</strong>, press the <strong>DOWN ARROW</strong> key" +
-        " on your keyboard </p>",
-        "<p><b>Instructions Summary</b></p>" +
-        "<p><b>1</b>. In this experiment, a circle will appear at the center " +
-        "of your screen.</p><p> The circle will be expanding and contracting.</p>" +
-        "<p><b>2</b>. From the moment the experiment begins and until it has concluded," +
-        " have your index fingers placed on the UP ARROW and DOWN ARROW keys of your keyboard.</p>" +
-        "<p><b>3</b>. When the circle begins to expand, " +
-        "press the UP ARROW key on your keyboard.</p>" +
-        "<p><b>4</b>. When the circle begins to contract, press the DOWN ARROW key" +
-        " on your keyboard </p>" +
-        "<p>Click Next to enter pre-experiment screen.</p>",
-    ],
-    show_clickable_nav: true,
-    post_trial_gap: 500
-};
+instruct_keypressalong = "<p class='description'>Press <em_blue>UP</em_blue> when the circle <em_blue>GROWS</em_blue>" +
+" and <em_red>DOWN</em_red> when the circle <em_red>SHRINKS.</em_red></p>";
 
+instruct_keypressalongPic = "<p>  <img style='width:500px; height:500px;' src='./assets/respiration_instruct.jpg'" +
+                        "alt='Breathe with the circle'> </p>"
 
+instruct_getready = "<p><b>Get Ready</b></p>"+
+"<p class='description'>When you are ready, place your fingers on the <em_blue>UP ARROW</em_blue> and " +
+"<em_red>DOWN ARROW</em_red> arrow keys.</p>" +
+"<p class='description'>Please press <em_black>'RIGHT ARROW'</em_black> to begin!</p>";
 
-
+instruct_whennotice = "<p class='description'>If you notice a change in your breathing, <em_black>immediately</em_black> " +
+"press the <em_black> RIGHT ARROW KEY.</em_black></p>" + 
+"<p>However, the circle won't always change speeds, so don't press unless you are sure.</p>"

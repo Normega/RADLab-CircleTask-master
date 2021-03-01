@@ -112,3 +112,10 @@ function errortext(lastACC, detectACC){
     }
     return feedbackHTML
 }
+
+function resetLogVars(){
+    lastACC = 100;          //start off as though things are great and wait to be disappointed
+    detectACC = 1;          //start off as though things are great and wait to be disappointed
+    detectedChange = false; //only relevant for Task version B, but let's make sure it is reset
+    confRating = "";        //wait for new ratings
+}

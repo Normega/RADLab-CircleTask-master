@@ -63,7 +63,7 @@ jsPsych.plugins['html-slider-response'] = (function() {
       button_label: {
         type: jsPsych.plugins.parameterType.STRING,
         pretty_name: 'Button label',
-        default:  'Continue',
+        default:  '<b>Continue <br> (Press Spacebar)</b>',
         array: false,
         description: 'Label of the button to advance.'
       },
@@ -134,6 +134,8 @@ jsPsych.plugins['html-slider-response'] = (function() {
       html += trial.prompt;
     }
 
+    html += '<br>';
+    
     // add submit button
     html += '<button id="jspsych-html-slider-response-next" class="jspsych-btn" '+ (trial.require_movement ? "disabled" : "") + '>'+trial.button_label+'</button>';
 
@@ -145,27 +147,47 @@ jsPsych.plugins['html-slider-response'] = (function() {
     };
 
     if(trial.require_movement){
-      display_element.querySelector('#jspsych-html-slider-response-response').addEventListener('click', function(){
+      document.getElementById("jspsych-html-slider-response-response").focus();
+      display_element.querySelector('#jspsych-html-slider-response-response').addEventListener('input', function(){
         display_element.querySelector('#jspsych-html-slider-response-next').disabled = false;
       });
     }
 
     display_element.querySelector('#jspsych-html-slider-response-next').addEventListener('click', function() {
-      // measure response time
-      var endTime = performance.now();
-      response.rt = endTime - startTime;
-      response.response = display_element.querySelector('#jspsych-html-slider-response-response').valueAsNumber;
-
-      if(trial.response_ends_trial){
-        end_trial();
-      } else {
-        display_element.querySelector('#jspsych-html-slider-response-next').disabled = true;
-      }
-
+     prepare_end_trial();
     });
 
-    function end_trial(){
+    // response listener always listening for key presses and recording them
+    var register_response = function (info) {            
+      if (jsPsych.pluginAPI.compareKeys(' ', info.key)){
+        prepare_end_trial();
+      };   
+    };
 
+     // start the response listener
+    var keyboardListener = jsPsych.pluginAPI.getKeyboardResponse({
+      callback_function: register_response,
+      valid_responses: [' '],
+      rt_method: 'performance',
+      persist: false,
+      allow_held_key: false
+    });
+  
+
+    var prepare_end_trial = function () {            
+       // measure response time
+       var endTime = performance.now();
+       response.rt = endTime - startTime;
+       response.response = display_element.querySelector('#jspsych-html-slider-response-response').valueAsNumber;
+ 
+       if(trial.response_ends_trial){
+         end_trial();
+       } else {
+         display_element.querySelector('#jspsych-html-slider-response-next').disabled = true;
+       }      
+    };
+    
+    function end_trial(){
       jsPsych.pluginAPI.clearAllTimeouts();
 
       // save data
