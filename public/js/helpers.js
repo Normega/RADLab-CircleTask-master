@@ -119,3 +119,18 @@ function resetLogVars(){
     detectedChange = false; //only relevant for Task version B, but let's make sure it is reset
     confRating = "";        //wait for new ratings
 }
+
+var images = [
+                'assets/respiration_basic.jpg',
+                'assets/respiration_instruct.jpg', 
+                'assets/entrain_instruct.jpg',
+                'assets/CombinedLogo.png',
+                'assets/confrating.jpg',
+                'assets/Feedback.jpg',
+                'assets/questionnaire.png'                
+            ];
+var preload = {
+    type: 'preload',
+    images:images,
+    auto_preload: true 
+}

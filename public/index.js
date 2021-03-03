@@ -13,6 +13,7 @@ var maintimeline = []; // the main experiment timeline
 ////////////////////////////////////////////////////////
 (firebase.auth);
 
+maintimeline.push(preload); //helpers.js
 maintimeline.push(welcome_trial); //instructions.js
 maintimeline.push(consent_trial); //consent.js
 

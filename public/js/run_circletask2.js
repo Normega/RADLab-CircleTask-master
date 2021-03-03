@@ -24,7 +24,7 @@ var circle2_instruct = {
         "press the <em_black> RIGHT ARROW KEY.</em_black></p>" + 
         "<p>However, the circle won't always change speeds, so <b>don't press unless you are sure.</b></p>",
         instruct_getready,                
-        "<br><p>Remember, only press the <em_black>RIGHT ARROW KEY</em_black> if you detect a change.</p>",        
+        "<br><p class='description'>Remember, only press the <em_black>RIGHT ARROW KEY</em_black> if you detect a change.</p>",        
         
     ],
     show_clickable_nav: true,

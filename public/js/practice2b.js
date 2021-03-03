@@ -11,12 +11,12 @@ var pract2b_instruct = {
         "<p><b>Keyboard Responses</b></p>" +        
         instruct_keypressalongPic + instruct_keypressalong,
         "<p><b>Noticing Change</b></p>" +
-        "<p class='description'p>While you are breathing along with the circle" +
+        "<p class='description'>While you are breathing along with the circle " +
         "<em_black>you may notice </em_black> that the your breathing is" +
         "<em_black> speeding up or slowing down.</em_black></p>"+
         instruct_whennotice,
         instruct_getready +
-        "<br><p>Remember to press the <em_black>RIGHT ARROW KEY</em_black> if you detect a change!</p>",        
+        "<br><p class='description'>Remember to press the <em_black>RIGHT ARROW KEY</em_black> if you detect a change!</p>",        
         
     ],
     show_clickable_nav: true,

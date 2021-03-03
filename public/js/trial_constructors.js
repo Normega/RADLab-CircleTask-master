@@ -8,9 +8,9 @@ var fixation = {
 
 var confidencerating={
     type: 'html-slider-response',
-    min: 1,
-    max: 99,
-    slider_start: 50,
+    min: 0,
+    max: 50,
+    slider_start: 25,
     require_movement: true,    
     stimulus: "<p class='image'><img src='/assets/confrating.jpg' style='width:800px;height:160px;' /></p>",
     labels: ['Not Confident', 'Very Confident'],
