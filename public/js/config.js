@@ -7,8 +7,8 @@ const CRIT_TRACK_ACC = 80; //the proportion of time you must be tracking the cir
 
 const NUMBER_OF_PULSES_1 = 2; // original: 8
 const NUMBER_OF_PULSES_2 = 12; // original: 12
-const NUMBER_OF_TRIALS_1 = 15; // original: 15
-const NUMBER_OF_TRIALS_2 = 3; // original: 10
+const NUMBER_OF_TRIALS_1 = 5; // original: 15
+const NUMBER_OF_TRIALS_2 = 5; // original: 10
 
 const FIRST_PULSE_TIME = 5000; //first pulse time in ms
 const startRadius = 50;       
