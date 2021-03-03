@@ -23,7 +23,7 @@ var confidencerating={
 
 var detectchange = {
     type: "html-keyboard-response",
-        stimulus: "<p class='image'><img src='/assets/Feedback.jpg' /></p>",
+        stimulus: "<p class='image'><img  style='width:500px; height:500px;' src='/assets/Feedback.jpg' /></p>",
         choices: ['ArrowLeft','ArrowRight','ArrowUp'],
         prompt: "",
         data: { 
