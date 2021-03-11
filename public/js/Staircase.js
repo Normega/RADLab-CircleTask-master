@@ -1,5 +1,5 @@
 //Staircase Variables
-const STARTING_RATE_CHANGE = 0.5;
+const STARTING_RATE_CHANGE = 0.65;
 const STARTING_STEP_SIZE = 0.1;
 const STAIR_DOWN_COUNT=2; //2 down rule
 const STAIR_UP_COUNT=1;   //1 up rule

@@ -46,13 +46,14 @@ var repeat_pract2_node = {
 }
 
 var practice2_node = {
-    timeline: [pract2_instruct, fixation, circleTask1, detectchange, repeat_pract2_node],
+    timeline: [pract2_instruct, fixation, circleTask1, detectchange, entrain_reminder, repeat_pract2_node],
     on_timeline_start: function() {
         console.log("Prep Practice 2");
         blockName = "Practice2";        
         lastACC = 100;      //start off as though things are great and wait to be disappointed
         detectACC = 1;      //start off as though things are great and wait to be disappointed
         curSpeed = generatetrials(1)[0]; //select 1 at random each time the node loads                      
+        numPulses = NUMBER_OF_PRACTICE_PULSES_1;
     },   
     loop_function: function(data){
         console.log("Track ACC: ",lastACC);

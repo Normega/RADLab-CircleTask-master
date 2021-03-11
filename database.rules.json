@@ -1,10 +1,12 @@
 {
-    "rules": {
-    ".read": false,
-    ".write": "auth != null",
-  	"foo": {
-      ".validate": "newData.isString()"
-    }
-  }
-  
+  "rules": {
+    "sessions": {
+      "$uid":{
+        ".read": false,
+        ".write": "$uid === auth.uid"
+      }
+    }  	    
+  }  
 }
+
+

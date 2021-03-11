@@ -52,7 +52,7 @@ var repeat_pract_node = {
 }
 
 var practice_node = {
-    timeline: [pract_instruct, fixation, circleTask1, repeat_pract_node],
+    timeline: [pract_instruct, fixation, circleTask1, entrain_reminder, repeat_pract_node],
     on_timeline_start: function() {         
         blockName = "Practice1"; 
         repeatneeded=false; //start off as though things are great and wait to be disappointed

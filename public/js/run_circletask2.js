@@ -20,11 +20,9 @@ var circle2_instruct = {
         "<p class='description'p>While you are breathing along with the circle " +
         "you may notice your breathing" +
         "<em_black> speed up </em_black>or <em_black>slow down.</em_black></p>"+
-        "<p>If you notice a change in your breathing, <em_black>immediately</em_black> " +
-        "press the <em_black> RIGHT ARROW KEY.</em_black></p>" + 
-        "<p>However, the circle won't always change speeds, so <b>don't press unless you are sure.</b></p>",
+        instruct_whennotice,
         instruct_getready,                
-        "<br><p class='description'>Remember, only press the <em_black>RIGHT ARROW KEY</em_black> if you detect a change.</p>",        
+        instruct_whennoticequick,        
         
     ],
     show_clickable_nav: true,
@@ -39,7 +37,7 @@ var repeat_circle2_instruct = {
         "<p>We can only use your data if you show that you are paying attention.</p>" +
         "<p>Please try to stay focused and press the keys along with your breaths.</p><br>" +
         instruct_breathealong + instruct_keypressalong + 
-        "<p class='description'>Only press <em_blue>RIGHT ARROW</em_blue> if you notice your breathing change speeds.</p>",  
+        instruct_whennoticequick,  
     ],
     show_clickable_nav: true,
     post_trial_gap: 500
@@ -62,18 +60,19 @@ let circle2Trials = generatetrials(NUMBER_OF_TRIALS_2)
 shuffle(circle2Trials);
 
 var circle2_node = {
-    timeline: [fixation, circleTask2, detectchange, confidencerating, repeat_circle2_node],
+    timeline: [fixation, circleTask2, detectchange, confidencerating, entrain_reminder, repeat_circle2_node],
     on_timeline_start: function() {
         console.log("Prep Circle 2");
-        blockName = "Circle2";        
+        blockName = "Circle2"; 
+        numPulses = NUMBER_OF_PULSES_2;       
         resetLogVars();
         curSpeed = circle2Trials.pop(); //select 1 from the trial list        
     },   
     loop_function: function(data){
         console.log("Track ACC: ",lastACC);
         if(circle2Trials.length > 0){ 
-            console.log("Do staircase for acc: ", detectACC);
-            nextStep(detectACC);           
+            //console.log("Do staircase for acc: ", detectACC);
+            //nextStep(detectACC); No staircase for Version B            
             return true; //keep looping when there are more trials to use
         } else {
             trialNumber = 0;            

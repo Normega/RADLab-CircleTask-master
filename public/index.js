@@ -15,7 +15,8 @@ var maintimeline = []; // the main experiment timeline
 
 maintimeline.push(preload); //helpers.js
 maintimeline.push(welcome_trial); //instructions.js
-maintimeline.push(consent_trial); //consent.js
+maintimeline.push(QC_node); //instructions.js
+maintimeline.push(consent_node); //consent.js
 
 maintimeline.push(validateID_node); //getID.js
 maintimeline.push(entrain_node);    //entrain.js

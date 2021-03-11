@@ -15,7 +15,7 @@ jsPsych.plugins["circle-task2"] = (function () {
                 type: jsPsych.plugins.parameterType.KEYCODE,
                 array: true,
                 pretty_name: "Choices",
-                default: ['arrowup','arrowdown','arrowright'], // up and down and right
+                default: ['arrowup','arrowdown',' '], // up and down and spacebar
                 description: "The keys the subject is allowed to press to respond to the stimulus.",
             },
             prompt: {
@@ -146,14 +146,14 @@ jsPsych.plugins["circle-task2"] = (function () {
 
         // response listener always listening for key presses and recording them
         var register_response = function (info) {            
-            console.log(info.key);
+            //console.log(info.key);
             //if (info.key == 38){
             if (jsPsych.pluginAPI.compareKeys('ArrowUp', info.key)){
                 current_response = "expand";
             //} else if (info.key == 40){
             } else if (jsPsych.pluginAPI.compareKeys('ArrowDown', info.key)){
                 current_response = "contract";
-            } else if (jsPsych.pluginAPI.compareKeys('ArrowRight', info.key)){
+            } else if (jsPsych.pluginAPI.compareKeys(' ', info.key)){
                 current_response = "changedetected";                                
             };            
         };
@@ -245,13 +245,17 @@ jsPsych.plugins["circle-task2"] = (function () {
 
             if (expand) {
                 radius += dr;
-                prompt.innerHTML = `BREATHE IN  + PRESS UP ARROW <br> ACCURACY: ${computeACC(runningDeviation, totalFrames)}`;                
+                prompt.innerHTML = `BREATHE IN  + PRESS UP ARROW `+
+                `<br> ACCURACY: ${computeACC(runningDeviation, totalFrames)}`+
+                `<br><br>PRESS SPACEBAR IF YOU NOTICE A CHANGE IN SPEED`;
                 if (current_response != "expand"){
                     runningDeviation += 1;
                 }
             } else {
                 radius -= dr;
-                prompt.innerHTML = `BREATHE OUT  + PRESS DOWN ARROW  <br> ACCURACY: ${computeACC(runningDeviation, totalFrames)}`;
+                prompt.innerHTML = `BREATHE OUT  + PRESS DOWN ARROW  `+
+                                    `<br> ACCURACY: ${computeACC(runningDeviation, totalFrames)}`+
+                                    `<br><br>PRESS SPACEBAR IF YOU NOTICE A CHANGE IN SPEED`;
                 if (current_response != "contract"){
                     runningDeviation += 1;
                 }
@@ -264,7 +268,7 @@ jsPsych.plugins["circle-task2"] = (function () {
             elapsed = now - then;
             
             if (current_response == "changedetected"){
-                console.log("Detect Registered!");                
+                //console.log("Detect Registered!");                
                 detectedChange = cumulativeChange;
                 doneTrial = true;
                 end_trial(animationId);
@@ -286,7 +290,7 @@ jsPsych.plugins["circle-task2"] = (function () {
                     time: elapsed,
                 });
                 expand = true;
-                console.log("dr: ", dr);
+                //console.log("dr: ", dr);
                 currPulses++;
                 
                 then = now - (elapsed % onewayTime); // get ready for the next pulse animation

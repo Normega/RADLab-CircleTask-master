@@ -2,13 +2,14 @@
 const EXPERIMENT_START_TIME = new Date().getTime();
 const NUMBER_OF_ENTRAIN_PULSES = 2;
 const NUMBER_OF_PRACTICE_PULSES_1 = 2;
+const NUMBER_OF_PRACTICE_PULSES_2 = 2;
 
 const CRIT_TRACK_ACC = 80; //the proportion of time you must be tracking the circle with keyboard to pass
 
-const NUMBER_OF_PULSES_1 = 2; // original: 8
-const NUMBER_OF_PULSES_2 = 12; // original: 12
-const NUMBER_OF_TRIALS_1 = 5; // original: 15
-const NUMBER_OF_TRIALS_2 = 5; // original: 10
+const NUMBER_OF_PULSES_1 = 8; // original: 8 --> 10
+const NUMBER_OF_PULSES_2 = 12; // original: 12 --> 10
+const NUMBER_OF_TRIALS_1 = 3; // original: 15
+const NUMBER_OF_TRIALS_2 = 3; // original: 10
 
 const FIRST_PULSE_TIME = 5000; //first pulse time in ms
 const startRadius = 50;       
@@ -26,7 +27,12 @@ let confRating = -1; // confidence ratings
 let detectedChange = 0; // for task version B, did they exit the trial early?
 
 //TRIAL CONTROL
+let greenlight = true; //allows study to keep running- QC checks can turn off this light
+let numPulses = NUMBER_OF_PRACTICE_PULSES_1; //allows us to manipulate the numPulses based on prac vs. main trials
 let curSpeed = "undefined"; //keeps track of the current trial speed
 let repeatneeded = false; //start by assuming that people are doing the tasks correctly
+//starting step?
+
 
 let scaleWidth = 400; //how wide likert scales should be (in pixels)
+

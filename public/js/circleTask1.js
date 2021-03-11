@@ -85,7 +85,7 @@ jsPsych.plugins["circle-task1"] = (function () {
     }
 
     plugin.trial = function (display_element, trial) {               
-        console.log("Starting a ",trial.speed," trial...");
+        //console.log("Starting a ",trial.speed," trial...");
         var totalFrames = 0; // keeping track of animation frames 
 
         var new_html =
@@ -145,7 +145,7 @@ jsPsych.plugins["circle-task1"] = (function () {
 
         // response listener always listening for key presses and recording them
         var register_response = function (info) {            
-            console.log(info.key);
+            //console.log(info.key);
             //if (info.key == 38){
             if (jsPsych.pluginAPI.compareKeys('ArrowUp', info.key)){
                 current_response = "expand";
@@ -279,7 +279,7 @@ jsPsych.plugins["circle-task1"] = (function () {
                     time: elapsed,
                 });
                 expand = true;
-                console.log("dr: ", dr);
+                //console.log("dr: ", dr);
                 currPulses++;
                 
                 then = now - (elapsed % onewayTime); // get ready for the next pulse animation

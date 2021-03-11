@@ -47,7 +47,6 @@ var repeat_entrain_node = {
     }
 }
 
-
 var entrain_check = {
     type: "html-keyboard-response",
     stimulus: "<p>Were you able to match your breath to the circle?</p>",

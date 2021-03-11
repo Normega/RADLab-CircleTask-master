@@ -1,3 +1,14 @@
+var entrain_reminder = {
+    type: "html-keyboard-response",
+    stimulus: "<p>Were you able to match your breath to the circle?</p>",
+    choices: ["y", "n"],
+    prompt: "<p>Y - Yes. <br/>  N - No. </p>",
+    data: { 
+        taskType: "entrainCheck", 
+        trial: trialNumber 
+    },    
+}
+
 var fixation = {
     type: 'html-keyboard-response',
     stimulus: '<div style="font-size:60px;">+</div>'+
@@ -14,7 +25,8 @@ var confidencerating={
     require_movement: true,    
     stimulus: "<p class='image'><img src='/assets/confrating.jpg' style='width:800px;height:160px;' /></p>",
     labels: ['Not Confident', 'Very Confident'],
-    prompt: "<p><b>How confident are you in your response?</b></p>",
+    prompt: "<p><b>How confident are you in your response?</b><br>"+
+            "Move the slider with the arrow keys and press spacebar to continue</p>",
     on_finish: function(data){
         confRating= data.response;
         saveSessionData(blockName + "_Confidence", curSpeed, rateChange, step, lastACC, detectACC, detectedChange, confRating);
@@ -91,7 +103,7 @@ var circleTask1 = {
         // to update rate change
         return rateChange;            
     },
-    numberOfPulses: NUMBER_OF_PRACTICE_PULSES_1,
+    numberOfPulses: function() { return numPulses;},
     speed: function(){        
         return curSpeed;
     },
@@ -125,7 +137,7 @@ var circleTask2 = {
     stimulus:
         "<canvas id='myCanvas' width='800' height='500'></canvas>" +
         "<p id='prompt' style='text-align:center;font-weight:bold;'></p>",
-        choices: ['ArrowUp', 'ArrowDown', 'ArrowRight'], 
+        choices: ['ArrowUp', 'ArrowDown', ' '], 
     post_trial_gap: 500,
     response_ends_trial: false,
     step: function () {
@@ -136,7 +148,7 @@ var circleTask2 = {
         // to update rate change
         return rateChange;            
     },
-    numberOfPulses: NUMBER_OF_PRACTICE_PULSES_1,
+    numberOfPulses: function() { return numPulses;},
     speed: function(){        
         return curSpeed;
     },

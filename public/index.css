@@ -9,13 +9,26 @@ canvas {
 	border: 3px solid black;
 }
 
-img {
+div {	
+	justify-content: left;
 }
 
 p {
-	text-align: center;
 	size: 0.9;
 }
+
+table {
+	width: 80%;	
+}
+
+p.consent {
+	width: 80%;
+	margin: auto;
+	justify-content: left;
+	size: 0.7;
+}
+
+
 p.answer {
 	text-align: center;
 	text-align-last: center;
@@ -47,12 +60,12 @@ p.description em_red {
 }
 
 p.inputQ  {
-	text-align: left;
+	text-align: right;
 	color: #000000;
 }
 
 p.input  {
-	text-align: right;
+	text-align: left;
 	color: #000000;
 }
 

@@ -12,11 +12,12 @@ var pract2b_instruct = {
         instruct_keypressalongPic + instruct_keypressalong,
         "<p><b>Noticing Change</b></p>" +
         "<p class='description'>While you are breathing along with the circle " +
-        "<em_black>you may notice </em_black> that the your breathing is" +
-        "<em_black> speeding up or slowing down.</em_black></p>"+
+        "<em_black>you may notice </em_black> that the your breathing is " +
+        "<em_black>speeding up or slowing down.</em_black></p>"+
         instruct_whennotice,
         instruct_getready +
-        "<br><p class='description'>Remember to press the <em_black>RIGHT ARROW KEY</em_black> if you detect a change!</p>",        
+        "<br>" +
+        instruct_whennoticequick,        
         
     ],
     show_clickable_nav: true,
@@ -49,12 +50,13 @@ var repeat_pract2b_node = {
 }
 
 var practice2b_node = {
-    timeline: [pract2b_instruct, circleTask2, detectchange, repeat_pract2b_node],
+    timeline: [pract2b_instruct, circleTask2, detectchange, entrain_reminder, repeat_pract2b_node],
     on_timeline_start: function() {
         console.log("Prep Practice 2b");
         blockName = "Practice2b";        
         resetLogVars();
         curSpeed = generatetrials(1)[0]; //select 1 at random each time the node loads                      
+        numPulses = NUMBER_OF_PRACTICE_PULSES_2;
     },   
     loop_function: function(data){
         console.log("Track ACC: ",lastACC);

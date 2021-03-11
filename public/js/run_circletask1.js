@@ -59,10 +59,11 @@ let circle1Trials = generatetrials(NUMBER_OF_TRIALS_1)
 shuffle(circle1Trials);
 
 var circle1_node = {
-    timeline: [fixation, circleTask1, detectchange, confidencerating, repeat_circle1_node],
+    timeline: [fixation, circleTask1, detectchange, confidencerating, entrain_reminder, repeat_circle1_node],
     on_timeline_start: function() {
         console.log("Prep Circle 1");
         blockName = "Circle1";
+        numPulses = NUMBER_OF_PULSES_1;
         resetLogVars();        
         
         curSpeed = circle1Trials.pop(); //select 1 from the trial list        

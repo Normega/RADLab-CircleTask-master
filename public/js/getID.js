@@ -2,6 +2,8 @@
 const authnum = getAuthNum()
 var goodId = false;
 
+
+
 // Authentication
 firebase.auth().signInAnonymously()
   .then(() => {
@@ -20,6 +22,7 @@ firebase.auth().onAuthStateChanged((user) => {
     // User is signed in, see docs for a list of available properties
     // https://firebase.google.com/docs/reference/js/firebase.User
     var uid = user.uid;
+
     //console.log("Just registered user ID: ",uid);
     // ...
   } else {
@@ -30,10 +33,10 @@ firebase.auth().onAuthStateChanged((user) => {
 
 var idText = '<table>' +
     '<tr>'+
-    '<td><p class="inputQ">Please enter your Participant Identification Number (Sign-up ID or Worker ID): </p></td>' +
+    '<td><p class="inputQ">Please enter your Sign-up ID: </p></td>' +
     '<td><p class="input"><input name="userId1" id="userId1" type="text"> </td>' +
     '</tr><tr>'+
-    '<td><p class="inputQ">Please enter your ID a second time to make sure we get it right: </p></td>' +
+    '<td><p class="inputQ">Please enter your ID again to confirm: </p></td>' +
     '<td><p class="input"><input name = "userId2" id="userId2" type="text"> </p></td>'+
     '</tr></table>';
 

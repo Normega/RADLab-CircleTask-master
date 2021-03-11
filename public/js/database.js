@@ -49,8 +49,10 @@ function saveSessionData(blockname, changeType = "", rate = "", step = "",
                 MAIA_bodylisten = "",
                 MAIA_trusting = "",
                 MAIA_total = ""
-                ){
-    firebase.database().ref('sessions/' + userId + '/' + eventNum).set({
+                )
+{
+    var user = firebase.auth().currentUser;
+    firebase.database().ref('sessions/' + user.uid + '/' + eventNum).set({
         StartTime: EXPERIMENT_START_TIME,
         Time: now(),        
         UserId: userId,
@@ -116,7 +118,8 @@ function saveSessionData(blockname, changeType = "", rate = "", step = "",
 
 
 function saveSummaryData() {
-    firebase.database().ref('data/' + userId ).push().set({
+    var user = firebase.auth().currentUser;
+    firebase.database().ref('data/' + user.uid ).push().set({
         StartTime: EXPERIMENT_START_TIME,
         Time: now(),
         UserId: userId,

@@ -58,5 +58,8 @@ instruct_getready = "<p><b>Get Ready</b></p>"+
 "<p class='description'>Please press <em_black>'RIGHT ARROW'</em_black> to begin!</p>";
 
 instruct_whennotice = "<p class='description'>If you notice a change in your breathing, <em_black>immediately</em_black> " +
-"press the <em_black> RIGHT ARROW KEY.</em_black></p>" + 
+"press the <em_black> SPACEBAR.</em_black></p>" + 
 "<p>However, the circle won't always change speeds, so don't press unless you are sure.</p>"
+
+instruct_whennoticequick = "<p class='description'>Press <em_blue>SPACEBAR</em_blue> if " +
+"you notice your breathing change speeds.</p>"
