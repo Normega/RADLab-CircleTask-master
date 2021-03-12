@@ -1,12 +1,6 @@
-//Staircase Variables
-const STARTING_RATE_CHANGE = 0.65;
-const STARTING_STEP_SIZE = 0.1;
-const STAIR_DOWN_COUNT=2; //2 down rule
-const STAIR_UP_COUNT=1;   //1 up rule
-const STAIR_FACTOR = 0.5; //what to do to the step after a successful down step
-
 let goodcount = 0;
 let badcount = 0;
+let reversalCount = 0;
 let rateChange = STARTING_RATE_CHANGE; //starting proportional rate change across a change trial; .5 = 50% change from the base rate
 let step = STARTING_STEP_SIZE; // starting step size for increasing or decreasing rate change (.1 = 10% added or subtracted from current rate)
 let hardbumper = false;
@@ -47,11 +41,15 @@ function nextStep(correct){
         }
     }
 
-    //check if a full reversal has been made
+    //check if a full reversal has been made - only update step if # of reversals is hit
     if (hardbumper & easybumper) { 
-        step = step * STAIR_FACTOR;
+        reversalCount ++;
         hardbumper = false;
         easybumper = false;
+        if (reversalCount == STAIR_REVERSALS) {
+            reversalCount = 0;
+            step = step * STAIR_FACTOR;          
+        }         
     }
 
     rateData.push(rateChange);

@@ -31,8 +31,16 @@ let greenlight = true; //allows study to keep running- QC checks can turn off th
 let numPulses = NUMBER_OF_PRACTICE_PULSES_1; //allows us to manipulate the numPulses based on prac vs. main trials
 let curSpeed = "undefined"; //keeps track of the current trial speed
 let repeatneeded = false; //start by assuming that people are doing the tasks correctly
-//starting step?
+
+//Staircase Variables
+const STARTING_RATE_CHANGE = 0.5;
+const STARTING_STEP_SIZE = 0.1;
+const STAIR_DOWN_COUNT=2; //2 down rule
+const STAIR_UP_COUNT=1;   //1 up rule
+const STAIR_REVERSALS=2; //how many reversals before we change step size
+const STAIR_FACTOR = 0.5; //what to do to the step after a successful down step
 
 
+// QUESTIONNAIRE CONTROL
 let scaleWidth = 400; //how wide likert scales should be (in pixels)
 
